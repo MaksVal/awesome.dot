@@ -158,12 +158,6 @@ globalkeys = gears.table.join(
                 group = "screen"
              }
    ),
-   awful.key({ modkey, }, "z", function () awful.screen.focused().quake:toggle() end,
-             {
-                description = "open a quake terminal",
-                group = "launcher"
-             }
-   ),
 
    -- MPD control
    awful.key({			 }, "XF86AudioPlay",

@@ -37,13 +37,13 @@ awful.rules.rules = {
       }, properties = { floating = true, callback = function(c) c.ontop = not c.ontop end }
    },
    -- Add titlebars to normal clients and dialogs
-   {
-      rule_any = {
-         type = {
-            "normal", "dialog"
-         }
-      }, properties = { titlebars_enabled = true }
-   },
+   -- {
+   --    rule_any = {
+   --       type = {
+   --          "normal", "dialog"
+   --       }
+   --    }, properties = { titlebars_enabled = true }
+   -- },
    {
       rule_any = {
          class = {
@@ -64,8 +64,7 @@ awful.rules.rules = {
          class = {
             "Emacs", "xfreerdp"
          }
-      }, properties = { screen = 2, tag = "1",switchtotag = true,
-                        placement = awful.placement.no_overlap+awful.placement.no_offscreen }
+      }, properties = { screen = 2, tag = "1",switchtotag = true  }
    },
    {
       rule_any = {

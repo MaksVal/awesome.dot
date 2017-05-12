@@ -6,13 +6,17 @@ gears = require("gears")
 
 -- Widget and layout library
 local wibox = require("wibox")
+local orglendar = require("external.orglendar")
 
 -- Theme handling library
 beautiful   = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 hotkeys_popup = require("awful.hotkeys_popup").widget
+
 
 -- Enable VIM help for hotkeys widget when client with matching name is opened:
 require("awful.hotkeys_popup.keys.vim")
@@ -41,9 +45,12 @@ do
     end)
 end
 -- }}}
--- beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
-beautiful.init(awful.util.get_configuration_dir().. "themes/my/theme.lua")
 
+
+-- beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
+-- beautiful.init(awful.util.get_configuration_dir().. "themes/my/theme.lua")
+beautiful.init(awful.util.get_configuration_dir().. "themes/lcars-xresources-hidpi/theme.lua")
+-- beautiful.init(awful.util.get_configuration_dir().. "themes/twmish/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal 		= "konsole" or "xterm"
@@ -155,6 +162,10 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
+local mu4a  	= require("mu4a")
+
+orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -210,6 +221,14 @@ local function set_wallpaper(s)
     end
 end
 
+-- Separators
+spr = wibox.widget.textbox(' ')
+arrl = wibox.widget.textbox(beautiful.arrl)
+arrl_dl = wibox.widget.imagebox(beautiful.arrl_dl)
+arrl_ld = wibox.widget.imagebox(beautiful.arrl_ld)
+
+-- aliases for setup
+local al = awful.layout.layouts
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
@@ -218,7 +237,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5" }, s, {al[4], al[2], al[8], al[6], al[2]})
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -241,7 +260,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
+       layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
@@ -250,11 +269,12 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
-            wibox.widget.systray(),
-            mytextclock,
-            s.mylayoutbox,
+           layout = wibox.layout.fixed.horizontal,
+           mu4a_widget,
+           mykeyboardlayout,
+           wibox.widget.systray(),
+           mytextclock,
+           s.mylayoutbox,
         },
     }
 end)
