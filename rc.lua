@@ -17,6 +17,11 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 hotkeys_popup = require("awful.hotkeys_popup").widget
 
+function file_exists(name)
+   local f=io.open(name,"r")
+   if f ~= nil then
+      io.close(f) return true else return false end
+end
 
 -- Enable VIM help for hotkeys widget when client with matching name is opened:
 require("awful.hotkeys_popup.keys.vim")
@@ -162,7 +167,12 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
-local mu4a  	= require("mu4a")
+mu4a_widget = wibox.widget.imagebox()
+mu4a_widget:set_image(beautiful.email_icon)
+
+if file_exists(awful.util.get_configuration_dir() .. "mu4a.lua") then
+   local mu4a = require("mu4a")
+end
 
 orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"
 
