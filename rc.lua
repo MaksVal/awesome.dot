@@ -167,11 +167,12 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
-mu4a_widget = wibox.widget.imagebox()
-mu4a_widget:set_image(beautiful.email_icon)
+mu4a_widget = wibox.widget.imagebox(beautiful.email_icon)
+mu4a_widget.visible = false
 
 if file_exists(awful.util.get_configuration_dir() .. "mu4a.lua") then
    local mu4a = require("mu4a")
+   mu4a_widget.visible = true
 end
 
 orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"
