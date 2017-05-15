@@ -64,7 +64,7 @@ editor_cmd 		= terminal .. " -e " .. editor
 editor_gui 		= (os.getenv("VISUAL") or "emacs -nw")
 player     		= terminal .. " -e ncmpcpp"
 browser		    = "chromium-browser"
-mail			= editor_gui   .. " -e \"\(mu4e\)\""
+mail            = editor_gui   .. " -e \"\(mu4e\)\""
 xscreen_lock	= "xscreensaver-command -lock"
 music_play		= "mpc toggle || ncmpc toggle || pms toggle"
 music_stop 		= "mpc stop || ncmpc stop || pms stop"
@@ -167,12 +167,12 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
-mu4a_widget = wibox.widget.imagebox(beautiful.email_icon)
+mu4a_widget = wibox.widget.imagebox()
 mu4a_widget.visible = false
 
 if file_exists(awful.util.get_configuration_dir() .. "mu4a.lua") then
    local mu4a = require("mu4a")
-   mu4a_widget.visible = true
+   mu4a_init(mu4a_widget)
 end
 
 orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"

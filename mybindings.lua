@@ -132,7 +132,7 @@ globalkeys = gears.table.join(
                 group = "launcher"
              }
    ),
-   awful.key({ modkey,	       }, "e", function () kill_and_run(mail) end,
+   awful.key({ modkey,	       }, "e", function () awful.util.spawn(mail) end,
              {
                 description = "open a mail client",
                 group = "launcher"
