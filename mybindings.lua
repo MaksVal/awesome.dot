@@ -150,6 +150,14 @@ globalkeys = gears.table.join(
                 group = "launcher"
              }
    ),
+   -- Take a screenshot
+   awful.key({  			 }, "Print", function() kill_and_run("spectacle") end,
+             {
+                description = "take a screenshot",
+                group = "launcher"
+             }
+   ),
+
 
    -- Other
    awful.key({                 }, "Pause",  function() awful.util.spawn(xscreen_lock) end,

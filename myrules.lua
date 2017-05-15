@@ -24,7 +24,7 @@ awful.rules.rules = {
             "Arandr", "Gpick", "Kruler", "MessageWin",  -- kalarm.
             "Sxiv", "Wpa_gui", "pinentry", "veromix",
             "xtightvncviewer", "MPlayer", "pinentry",
-            "Speedcrunch", "Wine", "Gcalctool"
+            "Speedcrunch", "Wine", "Gcalctool", "MPlayer"
          },
          name = {
             "Please wait...", "Копирование",  "Перемещение", "Добавление",
