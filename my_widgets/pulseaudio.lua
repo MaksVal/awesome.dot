@@ -74,8 +74,6 @@ local function worker(args)
             pulseaudio.index = volume_now.index
             pulseaudio.muted = volume_now.muted
 
-            print(pulseaudio.device .. " " .. pulseaudio.index)
-            -- print(stdout .. "\n\n\n\n\n\n" .. stderr)
             local ch = 1
             volume_now.channel = {}
             for v in string.gmatch(stdout, ":.-(%d+)%%") do
@@ -92,8 +90,6 @@ local function worker(args)
          end)
 
       if widget then
-         print(pulseaudio.muted)
-
          if  (pulseaudio.muted == "no") then
             widget:set_widget(volume_yes)
          elseif (pulseaudio.muted == "yes") then
