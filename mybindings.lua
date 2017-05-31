@@ -126,7 +126,7 @@ globalkeys = gears.table.join(
                 group = "launcher"
              }
    ),
-   awful.key({ modkey, "Shift" }, "e", function () awful.util.spawn(editor_gui) end,
+   awful.key({ modkey, "Shift" }, "e", function () awful.spawn(editor_gui) end,
              {
                 description = "open a file manager",
                 group = "launcher"

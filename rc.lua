@@ -7,6 +7,7 @@ gears = require("gears")
 -- Widget and layout library
 local wibox = require("wibox")
 local orglendar = require("external.orglendar")
+my_widgets = require("my_widgets")
 
 -- Theme handling library
 beautiful   = require("beautiful")
@@ -164,6 +165,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
+my_widgets = require("my_widgets")
+-- Create a pulseaudio widge
+pulseaudio = my_widgets.pulseaudio({})
+
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
@@ -281,6 +286,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
            layout = wibox.layout.fixed.horizontal,
+           pulseaudio,
            mu4a_widget,
            mykeyboardlayout,
            wibox.widget.systray(),
