@@ -67,9 +67,10 @@ local function worker(args)
                device = string.match(stdout,  '\*%sindex: .*device\.product.name = \"(.+)\"[%s]+device\.serial')
                   or "N/A",
                sink   = device, -- legacy API
-               muted  = string.match(stdout, "'\*%sindex: .*muted: (%S+)") or "N/A"
+               muted  = string.match(stdout, "\*%sindex: .*muted: (%S+)") or "N/A",
             }
 
+            -- print(string.gmatch(stdout,"\*%sindex: .*front-left:.-(%d+)%%"))
             pulseaudio.device = volume_now.device
             pulseaudio.index = volume_now.index
             pulseaudio.muted = volume_now.muted
@@ -83,13 +84,13 @@ local function worker(args)
 
             volume_now.left  = volume_now.channel[1] or "N/A"
             volume_now.right = volume_now.channel[2] or "N/A"
-
+            -- pulseaudio.level = volume_now.left
             -- widget = pulseaudio.widget
-
             settings()
          end)
 
       if widget then
+         -- volume_yes.shape.radial_progress(cr, 70, 20, .3)
          if  (pulseaudio.muted == "no") then
             widget:set_widget(volume_yes)
          elseif (pulseaudio.muted == "yes") then
