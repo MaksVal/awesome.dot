@@ -60,6 +60,7 @@ beautiful.init(awful.util.get_configuration_dir().. "themes/lcars-xresources-hid
 
 -- This is used later as the default terminal and editor to run.
 terminal 		= "konsole" or "xterm"
+terminal_run	= "konsole -e "
 editor     		= os.getenv("EDITOR") or "emacs" or "vi"
 editor_cmd 		= terminal .. " -e " .. editor
 editor_gui 		= (os.getenv("VISUAL") or "emacs -nw")
@@ -169,6 +170,7 @@ my_widgets = require("my_widgets")
 -- Create a pulseaudio widge
 pulseaudio = my_widgets.pulseaudio({})
 
+
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
@@ -181,6 +183,9 @@ if file_exists(awful.util.get_configuration_dir() .. "mu4a.lua") then
 end
 
 orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"
+
+-- MUSIC
+act_widgets = require("actionless.widgets.music")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(

@@ -15,7 +15,7 @@ local mpd = {
 --local cover_script = helpers.dir .. "widgets/music/backends_legacy/mpdcover"
 
 function mpd.init(args)
-  args = args or {} 
+  args = args or {}
   mpd.music_dir = args.music_dir or os.getenv("HOME") .. "/Music"
   mpd.host = args.host or "127.0.0.1"
   mpd.port = args.port or "6600"
@@ -24,17 +24,17 @@ function mpd.init(args)
 end
 -------------------------------------------------------------------------------
 function mpd.toggle()
-  awful.util.spawn.with_shell(
+  awful.spawn.with_shell(
     "mpc toggle || ncmpcpp toggle")
 end
 
 function mpd.next_song()
-  awful.util.spawn.with_shell(
+  awful.spawn.with_shell(
     "mpc next || ncmpcpp next")
 end
 
 function mpd.prev_song()
-  awful.util.spawn.with_shell(
+  awful.spawn.with_shell(
     "mpc prev || ncmpcpp prev")
 end
 -------------------------------------------------------------------------------
