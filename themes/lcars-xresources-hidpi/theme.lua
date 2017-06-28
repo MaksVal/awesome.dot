@@ -101,6 +101,7 @@ theme.xrdb = xresources.get_current_theme()
 
 -- PANEL COLORS:
 --
+
 theme.panel_taglist = theme.xrdb.color7
 theme.panel_close = theme.xrdb.color1
 theme.panel_tasklist = theme.xrdb.background
