@@ -75,7 +75,7 @@ local function worker(args)
             --    muted  = string.match(stdout, "\*%sindex: .*muted: (%S+)") or "N/A",
             -- }
 
-            local x, y = string.find(stdout,'%d+%s-/%s-(%d+)%%%s-/%s-.%d+.%d+%s-dB')
+            local x, y = string.find(stdout,'\*%sindex: .*%d+%s-/%s-(%d+)%%%s-/%s-.%d+.%d+%s-dB')
 
             -- pulseaudio.level = string.match(string.sub(stdout, x, y), '(%d+)%%')
             -- pulseaudio.device = volume_now.device
