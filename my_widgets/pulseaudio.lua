@@ -21,9 +21,12 @@ local function worker(args)
    local popup_position = args.popup_position or naughty.config.defaults.position
    local settings    = args.settings or function() end
    local scallback   = args.scallback or nil
-   local t_vol_yes = "<span size=\"larger\"> 🔉 </span>"
-   local t_vol_no = "<span size=\"larger\"> 🔈 </span>"
-   local t_vol_mute =  "<span size=\"larger\" color=\"#DC0000\"> 🔇 </span>"
+   local t_vol_yes = "<span size=\"large\"> 🔉 </span>"
+   local t_vol_no = "<span size=\"large\"> 🔈 </span>"
+   local t_vol_mute =  "<span size=\"large\" color=\"#DC0000\"> 🔇 </span>"
+   -- local t_vol_yes = " 🔉 "
+   -- local t_vol_no = " 🔈 "
+   -- local t_vol_mute =  "<span color=\"#DC0000\"> 🔇 </span>"
 
    volume_text = wibox.widget {
       align  = 'center',
@@ -37,7 +40,7 @@ local function worker(args)
    widget_master.min_value = 0
    widget_master.max_value = 100
    widget_master.value = 0
-   widget_master.forced_width = 40
+   widget_master.forced_width = 55
    widget_master.border_width = 2
    widget_master.border_color = beautiful.titlebar_bg_normal
    widget_master.color = beautiful.revelation_fg
@@ -75,6 +78,7 @@ local function worker(args)
             --    muted  = string.match(stdout, "\*%sindex: .*muted: (%S+)") or "N/A",
             -- }
 
+
             local x, y = string.find(stdout,'\*%sindex: .*%d+%s-/%s-(%d+)%%%s-/%s-.%d+.%d+%s-dB')
 
             -- pulseaudio.level = string.match(string.sub(stdout, x, y), '(%d+)%%')
@@ -84,7 +88,8 @@ local function worker(args)
             -- pulseaudio.sink = volume_now.sink
 
             pulseaudio.level = string.match(string.sub(stdout, x, y), '(%d+)%%') or "N/A"
-            pulseaudio.device = string.match(stdout,  '\*%sindex: .*device\.product.name = \"(.+)\"[%s]+device\.serial') or "N/A"
+            -- pulseaudio.device = string.match(stdout,  '\*%sindex: .*device\.product.name = \"(.+)\"[%s]+device\.serial') or "N/A"
+            pulseaudio.device = string.match(stdout,  '\*%sindex: .*device\.description = \"(.+)\" [%s%p]+alsa') or "N/A"
             pulseaudio.index = string.match(stdout,  '\*%sindex: (%d+)') or "N/A"
             pulseaudio.muted = string.match(stdout, "\*%sindex: .*muted: (%S+)") or "N/A"
             pulseaudio.sink = index

@@ -1,13 +1,24 @@
+-- Require the luarocks loader for luarocks dependencies
+require('luarocks.loader')
+
 -- Standard awesome library
 awful = require("awful")
 require("awful.autofocus")
 freedesktop = require("freedesktop")
 gears = require("gears")
 
+-- Add our lib folder to the require lookup path
+local configpath = gears.filesystem.get_configuration_dir()
+package.path = configpath .. "/lib/?.lua;" .. configpath .. "/lib/?/init.lua;" .. package.path
+
+
 -- Widget and layout library
 local wibox = require("wibox")
 local orglendar = require("external.orglendar")
 my_widgets = require("my_widgets")
+
+local lunaconf = require('lunaconf')
+local lunanotify = require('lunaconf.notify')
 
 -- Theme handling library
 beautiful   = require("beautiful")

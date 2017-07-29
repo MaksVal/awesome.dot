@@ -141,9 +141,9 @@ theme.revelation_border_color = theme.xrdb.color13
 theme.revelation_bg = theme.panel_bg
 theme.revelation_font = "Monospace Bold 24"
 -- FONTS:
---theme.font = "Monospace Bold "..tostring(dpi(10))
---theme.small_font = "Monospace "..tostring(dpi(7))
---theme.sans_font = "Sans Bold "..tostring(dpi(10))
+theme.font = "Monospace Bold "..tostring(dpi(10))
+theme.small_font = "Monospace "..tostring(dpi(7))
+theme.sans_font = "Sans Bold "..tostring(dpi(10))
 theme.font = "Monospace Bold 10"
 theme.tasklist_font = theme.font
 theme.small_font = "Monospace 7"
