@@ -21,9 +21,9 @@ local function worker(args)
    local popup_position = args.popup_position or naughty.config.defaults.position
    local settings    = args.settings or function() end
    local scallback   = args.scallback or nil
-   local t_vol_yes = "<span size=\"large\"> 🔉 </span>"
-   local t_vol_no = "<span size=\"large\"> 🔈 </span>"
-   local t_vol_mute =  "<span size=\"large\" color=\"#DC0000\"> 🔇 </span>"
+   local t_vol_yes = "<span size=\"small\"> 🔉 </span>"
+   local t_vol_no = "<span size=\"small\"> 🔈 </span>"
+   local t_vol_mute =  "<span size=\"small\" color=\"#DC0000\"> 🔇 </span>"
    -- local t_vol_yes = " 🔉 "
    -- local t_vol_no = " 🔈 "
    -- local t_vol_mute =  "<span color=\"#DC0000\"> 🔇 </span>"
@@ -114,7 +114,8 @@ local function worker(args)
 
                elseif (pulseaudio.muted == "yes") then
                   --                  widget:set_widget(volume_no)
-                 volume_text:set_markup_silently(t_vol_mute)
+                  volume_text:set_markup_silently(t_vol_mute)
+                  widget_master.value = tonumber(0)
                   -- widget_master.wiget:set_text("??")
 
                end
@@ -127,46 +128,6 @@ local function worker(args)
 
    local notification = nil
 
-   function pulseaudio:set_volume(direction, step)
-      awful.spawn.easy_async(
-         { shell, "-c",  pulseaudio.cmd_set_vol:format(pulseaudio.index, direction, step )},
-         function(stdout, stderr, reason, exit_codes)
-            pulseaudio.update()
-         end)
-      -- os.execute(pulseaudio.cmd_set_vol:format(pulseaudio.index, direction, step ))
-      -- pulseaudio.update()
-   end
-
-   function pulseaudio:set_mute()
-      awful.spawn.easy_async(
-         { shell, "-c",  pulseaudio.cmd_set_mute:format(pulseaudio.index)},
-         function(stdout, stderr, reason, exit_codes)
-            pulseaudio.update()
-
-         end)
-      -- os.execute(pulseaudio.cmd_set_mute:format(pulseaudio.index))
-
-   end
-
-   function pulseaudio:hide()
-      if notification ~= nil then
-         naughty.destroy(notification)
-         notification = nil
-      end
-   end
-
-   function pulseaudio:show(t_out)
-      pulseaudio:hide()
-
-      notification = naughty.notify({
-                                       preset = fs_notification_preset,
-                                       text = text_grabber(),
-                                       timeout = t_out,
-                                       screen = mouse.screen,
-                                       position = popup_position
-                                    })
-
-   end
 
    -- pulseaudio.update()
    gears.timer {
@@ -176,7 +137,7 @@ local function worker(args)
    }
 
    -- widget:set_widget(volume_yes)
---   volume_text:set_text(t_vol_no)
+   --   volume_text:set_text(t_vol_no)
    -- widget_master.widget:set_text("!")
 
    -- Bind onclick event function
@@ -193,8 +154,8 @@ local function worker(args)
       --    widget_master:set_widget(volume_no)
       -- end
       -- volume_text:set_text(t_vol_no)
---      widget_master.wiget:set_text("🔉")
- --     volume_text:set_text("🔉")
+      --      widget_master.wiget:set_text("🔉")
+      --     volume_text:set_text("🔉")
       pulseaudio:attach(widget_master,{onclick = onclick})
    end
 
@@ -202,6 +163,51 @@ local function worker(args)
    widget_master:connect_signal('mouse::leave', function () pulseaudio:hide() end)
 
    return widget_master
+end
+
+local function text_grabber()
+   local msg = pulseaudio.device
+
+   return msg
+end
+
+function pulseaudio:set_volume(direction, step)
+   awful.spawn.easy_async(
+      { shell, "-c",  pulseaudio.cmd_set_vol:format(pulseaudio.index, direction, step )},
+      function(stdout, stderr, reason, exit_codes)
+         pulseaudio.update()
+      end)
+   -- os.execute(pulseaudio.cmd_set_vol:format(pulseaudio.index, direction, step ))
+   -- pulseaudio.update()
+end
+
+function pulseaudio:set_mute()
+   awful.spawn.easy_async(
+      { shell, "-c",  pulseaudio.cmd_set_mute:format(pulseaudio.index)},
+      function(stdout, stderr, reason, exit_codes)
+         pulseaudio.update()
+      end)
+   -- os.execute(pulseaudio.cmd_set_mute:format(pulseaudio.index))
+end
+
+function pulseaudio:hide()
+   if notification ~= nil then
+      naughty.destroy(notification)
+      notification = nil
+   end
+end
+
+function pulseaudio:show(t_out)
+   pulseaudio:hide()
+
+   notification = naughty.notify({
+                                    preset = fs_notification_preset,
+                                    text = text_grabber(),
+                                    timeout = t_out,
+                                    screen = mouse.screen,
+                                    position = popup_position
+                                 })
+
 end
 
 function pulseaudio:attach(widget, args)

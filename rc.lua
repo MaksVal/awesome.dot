@@ -180,7 +180,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 my_widgets = require("my_widgets")
 -- Create a pulseaudio widge
 pulseaudio = my_widgets.pulseaudio({})
-
+-- brightness = my_widgets.brightness({})
 
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()

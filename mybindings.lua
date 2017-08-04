@@ -1,3 +1,17 @@
+local awful = require('awful')
+local lunaconf = require('lunaconf')
+local pulseaudio = my_widgets.pulseaudio
+
+local function brightness_control(which)
+	awful.spawn.easy_async(lunaconf.utils.scriptpath() .. 'brightness.sh ' .. which, function(out)
+		local value = tonumber(out)
+        local dialog = lunaconf.dialogs.bar('preferences-system-brightness-lock', 1)
+		dialog:set_value(value)
+		dialog:show()
+	end)
+end
+
+
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
                 awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -243,7 +257,6 @@ globalkeys = gears.table.join(
                 group = "Control of a music"
              }
    ),
-
    awful.key({ altkey, "Control" }, "Right",
              function ()
                 awful.util.spawn_with_shell(music_next)
@@ -252,6 +265,84 @@ globalkeys = gears.table.join(
              {
                 description = "Next",
                 group = "Control of a music"
+             }
+   ),
+   awful.key({}, 'XF86MonBrightnessUp',
+             function()
+                brightness_control('up')
+             end,
+             {
+                description = "Brightness UP",
+                group = "Control of a screen"
+             }
+   ),
+   awful.key({ 'Shift' }, 'XF86MonBrightnessUp',
+             function()
+                brightness_control('up small')
+             end,
+             {
+                description = "Brightness small UP",
+                group = "Control of a screen"
+             }
+   ),
+   awful.key({}, 'XF86MonBrightnessDown',
+             function()
+                brightness_control('down')
+             end,
+             {
+                description = "Brightness DOWN",
+                group = "Control of a screen"
+             }
+   ),
+   awful.key({ 'Shift' }, 'XF86MonBrightnessDown',
+             function()
+                brightness_control('down small')
+             end,
+             {
+                description = "Brightness small DOWN",
+                group = "Control of a screen"
+             }
+   ),
+   awful.key({}, 'XF86AudioRaiseVolume',
+             function()
+                pulseaudio:set_volume('+', 5)
+                local dialog = lunaconf.dialogs.bar(beautiful.volume_icon, 1)
+                dialog:set_value(pulseaudio.level)
+                dialog:show()
+             end,
+             {
+                description = "Volume UP",
+                group = "Management of a periphery"
+             }
+   ),
+   awful.key({}, 'XF86AudioLowerVolume',
+             function()
+                pulseaudio:set_volume('-', 5)
+                local dialog = lunaconf.dialogs.bar(beautiful.volume_low_icon, 1)
+                dialog:set_value(pulseaudio.level)
+                dialog:show()
+             end,
+             {
+                description = "Volume DOWN",
+                group = "Management of a periphery"
+             }
+   ),
+   awful.key({}, 'XF86AudioMute',
+             function()
+                pulseaudio:set_mute()
+                if ( pulseaudio.muted == "no" ) then
+                   local dialog = lunaconf.dialogs.bar(beautiful.volume_mute_icon, 1)
+                   dialog:set_value(0)
+                   dialog:show()
+                elseif (pulseaudio.muted == "yes") then
+                   local dialog = lunaconf.dialogs.bar(beautiful.volume_icon, 1)
+                   dialog:set_value(pulseaudio.level)
+                   dialog:show()
+                end
+             end,
+             {
+                description = "Volume DOWN",
+                group = "Management of a periphery"
              }
    )
 )
@@ -364,3 +455,12 @@ root.buttons(awful.util.table.join(
 -- Set keys
 root.keys(globalkeys)
 -- }}}
+
+
+-- -- Brightness Control
+-- lunaconf.keys.globals(
+-- 	awful.key({}, 'XF86MonBrightnessUp', function() brightness_control('up') end),
+-- 	awful.key({ 'Shift' }, 'XF86MonBrightnessUp', function() brightness_control('up small') end),
+-- 	awful.key({}, 'XF86MonBrightnessDown', function() brightness_control('down') end),
+-- 	awful.key({ 'Shift' }, 'XF86MonBrightnessDown', function() brightness_control('down small') end)
+-- )
