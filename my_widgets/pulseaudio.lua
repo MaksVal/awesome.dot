@@ -32,6 +32,8 @@ local function worker(args)
       align  = 'center',
       valign = 'center',
       markup = t_vol_no,
+      resize = true,
+      image  = beautiful.volume_icon,
       widget = wibox.widget.textbox}
    widget_master = wibox.container.radialprogressbar()
    widget_master.widget 	=  volume_text
