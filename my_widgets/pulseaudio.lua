@@ -42,9 +42,11 @@ local function worker(args)
    widget_master.min_value = 0
    widget_master.max_value = 100
    widget_master.value = 0
-   widget_master.forced_width = 55
-   widget_master.border_width = 2
-   widget_master.border_color = beautiful.titlebar_bg_normal
+   widget_master.paddings = 0
+   widget_master.forced_width = 30
+   widget_master.forced_height = nil
+   widget_master.border_width = 3
+   widget_master.border_color = "#313131"--beautiful.titlebar_bg_normal
    widget_master.color = beautiful.revelation_fg
    widget_master.opacity = 1
    -- widget_master.wiget =  wibox.widget.textbox()

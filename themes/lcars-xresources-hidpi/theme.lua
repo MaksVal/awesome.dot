@@ -128,9 +128,23 @@ theme.show_widget_icon = true
 --theme.widget_decoration_arrl = ''
 --theme.widget_decoration_arrr = ''
 
--- theme.arrl                          = theme.dir .. "/icons/powerarrow-dark/arrl.png"
--- theme.arrl_dl                       = theme.dir .. "/icons/powerarrow-dark/arrl_dl.png"
--- theme.arrl_ld                       = theme.dir .. "/icons/powerarrow-dark/arrl_ld.png"
+theme.arrl                          = theme.icons_dir .. "powerarrow-dark/arrl.png"
+theme.arrl_dl                       = theme.icons_dir .. "powerarrow-dark/arrl_dl.png"
+theme.arrl_ld                       = theme.icons_dir .. "powerarrow-dark/arrl_ld.png"
+
+theme.layout_tile                   = theme.icons_dir .. "powerarrow-dark/tile.png"
+theme.layout_tilegaps               = theme.icons_dir .. "powerarrow-dark/tilegaps.png"
+theme.layout_tileleft               = theme.icons_dir .. "powerarrow-dark/tileleft.png"
+theme.layout_tilebottom             = theme.icons_dir .. "powerarrow-dark/tilebottom.png"
+theme.layout_tiletop                = theme.icons_dir .. "powerarrow-dark/tiletop.png"
+theme.layout_fairv                  = theme.icons_dir .. "powerarrow-dark/fairv.png"
+theme.layout_fairh                  = theme.icons_dir .. "powerarrow-dark/fairh.png"
+theme.layout_spiral                 = theme.icons_dir .. "powerarrow-dark/spiral.png"
+theme.layout_dwindle                = theme.icons_dir .. "powerarrow-dark/dwindle.png"
+theme.layout_max                    = theme.icons_dir .. "powerarrow-dark/max.png"
+theme.layout_fullscreen             = theme.icons_dir .. "powerarrow-dark/fullscreen.png"
+theme.layout_magnifier              = theme.icons_dir .. "powerarrow-dark/magnifier.png"
+theme.layout_floating               = theme.icons_dir .. "powerarrow-dark/floating.png"
 
 -- theme.widget_decoration_arrl = '퟾'
 -- theme.widget_decoration_arrr = '퟿'
@@ -303,4 +317,5 @@ theme.volume_icon = theme.icons_dir .. "audio.svg"
 theme.volume_low_icon = theme.icons_dir .. "powerarrow-dark/vol_low.png"
 theme.volume_mute_icon = theme.icons_dir .. "powerarrow-dark/vol_mute.png"
 theme.volume_no_icon = theme.icons_dir .. "powerarrow-dark/vol_no.png"
+
 return theme
