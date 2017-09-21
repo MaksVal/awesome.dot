@@ -121,12 +121,6 @@ theme.wallpaper_cmd     = "nitrogen --restore"
 -- PANEL DECORATIONS:
 --
 theme.show_widget_icon = true
--- theme.widget_decoration_arrl = ''
--- theme.widget_decoration_arrr = ''
-
--- deprecated :
---theme.widget_decoration_arrl = ''
---theme.widget_decoration_arrr = ''
 
 theme.arrl                          = theme.icons_dir .. "powerarrow-dark/arrl.png"
 theme.arrl_dl                       = theme.icons_dir .. "powerarrow-dark/arrl_dl.png"
@@ -146,10 +140,6 @@ theme.layout_fullscreen             = theme.icons_dir .. "powerarrow-dark/fullsc
 theme.layout_magnifier              = theme.icons_dir .. "powerarrow-dark/magnifier.png"
 theme.layout_floating               = theme.icons_dir .. "powerarrow-dark/floating.png"
 
--- theme.widget_decoration_arrl = '퟾'
--- theme.widget_decoration_arrr = '퟿'
-
-
 theme.revelation_fg = theme.xrdb.color13
 theme.revelation_border_color = theme.xrdb.color13
 theme.revelation_bg = theme.panel_bg
@@ -158,10 +148,7 @@ theme.revelation_font = "Monospace Bold 24"
 theme.font = "Monospace Bold "..tostring(dpi(10))
 theme.small_font = "Monospace "..tostring(dpi(7))
 theme.sans_font = "Sans Bold "..tostring(dpi(10))
-theme.font = "Monospace Bold 10"
 theme.tasklist_font = theme.font
-theme.small_font = "Monospace 7"
-theme.sans_font = "Sans Bold 10"
 -- Don't use sans font:
 --theme.sans_font	= "theme.font"
 
@@ -172,7 +159,7 @@ theme.sans_font = "Sans Bold 10"
 --MISC:
 --
 
-theme.basic_panel_height = dpi(18)
+theme.basic_panel_height = dpi(8)
 theme.panel_padding_bottom = dpi(3)
 
 --theme.border_width = dpi(3)
@@ -211,7 +198,6 @@ theme.border_width = 0
 
 theme.panel_height = theme.basic_panel_height + theme.panel_padding_bottom
 theme.titlebar_height = theme.basic_panel_height + theme.base_border_width*2
-
 
 theme.left_panel_internal_corner_radius = dpi(30)
 

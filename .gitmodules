@@ -10,3 +10,6 @@
 [submodule "external/timoroes_awesome-config"]
 	path = external/timoroes_awesome-config
 	url = https://github.com/timroes/awesome-config.git
+[submodule "my_widgets/awesompd"]
+	path = my_widgets/awesompd
+	url = https://github.com/alexander-yakushev/awesompd.git
