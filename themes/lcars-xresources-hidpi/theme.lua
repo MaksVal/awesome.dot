@@ -88,7 +88,7 @@ local theme = {}
 theme.xrdb = xresources.get_current_theme()
 
 theme.dir = theme_dir
-theme.icons_dir = theme.dir .. "/icons/"
+theme.icons_dir = awful.util.getdir("config") .."/themes/icons/"
 
 --theme.error = theme.xrdb.color1
 --theme.warning = theme.xrdb.color2
@@ -126,34 +126,36 @@ theme.arrl                          = theme.icons_dir .. "powerarrow-dark/arrl.p
 theme.arrl_dl                       = theme.icons_dir .. "powerarrow-dark/arrl_dl.png"
 theme.arrl_ld                       = theme.icons_dir .. "powerarrow-dark/arrl_ld.png"
 
-theme.layout_tile                   = theme.icons_dir .. "powerarrow-dark/tile.png"
-theme.layout_tilegaps               = theme.icons_dir .. "powerarrow-dark/tilegaps.png"
-theme.layout_tileleft               = theme.icons_dir .. "powerarrow-dark/tileleft.png"
-theme.layout_tilebottom             = theme.icons_dir .. "powerarrow-dark/tilebottom.png"
-theme.layout_tiletop                = theme.icons_dir .. "powerarrow-dark/tiletop.png"
-theme.layout_fairv                  = theme.icons_dir .. "powerarrow-dark/fairv.png"
-theme.layout_fairh                  = theme.icons_dir .. "powerarrow-dark/fairh.png"
-theme.layout_spiral                 = theme.icons_dir .. "powerarrow-dark/spiral.png"
-theme.layout_dwindle                = theme.icons_dir .. "powerarrow-dark/dwindle.png"
-theme.layout_max                    = theme.icons_dir .. "powerarrow-dark/max.png"
-theme.layout_fullscreen             = theme.icons_dir .. "powerarrow-dark/fullscreen.png"
-theme.layout_magnifier              = theme.icons_dir .. "powerarrow-dark/magnifier.png"
-theme.layout_floating               = theme.icons_dir .. "powerarrow-dark/floating.png"
+local layouts_icon 				 	= theme.icons_dir .. "layouts/"
+
+theme.layout_tile                   = layouts_icon .. "tile.png"
+theme.layout_tilegaps               = layouts_icon .. "tilegaps.png"
+theme.layout_tileleft               = layouts_icon .. "tileleft.png"
+theme.layout_tilebottom             = layouts_icon .. "tilebottom.png"
+theme.layout_tiletop                = layouts_icon .. "tiletop.png"
+theme.layout_fairv                  = layouts_icon .. "fairv.png"
+theme.layout_fairh                  = layouts_icon .. "fairh.png"
+theme.layout_spiral                 = layouts_icon .. "spiral.png"
+theme.layout_dwindle                = layouts_icon .. "dwindle.png"
+theme.layout_max                    = layouts_icon .. "max.png"
+theme.layout_fullscreen             = layouts_icon .. "fullscreen.png"
+theme.layout_magnifier              = layouts_icon .. "magnifier.png"
+theme.layout_floating               = layouts_icon .. "floating.png"
 
 theme.revelation_fg = theme.xrdb.color13
 theme.revelation_border_color = theme.xrdb.color13
 theme.revelation_bg = theme.panel_bg
-theme.revelation_font = "Monospace Bold 24"
+theme.revelation_font = "Monospace Bold " .. tostring(dpi(11))
 -- FONTS:
-theme.font = "Monospace Bold "..tostring(dpi(10))
-theme.small_font = "Monospace "..tostring(dpi(7))
-theme.sans_font = "Sans Bold "..tostring(dpi(10))
+theme.font = "Roboto Condensed Bold "..tostring(dpi(11))
+theme.sans_font = "Roboto Condensed Bold "..tostring(dpi(11))
+-- theme.font = "Monospace Bold "..tostring(dpi(11))
+theme.small_font = "Monospace "..tostring(dpi(8))
+-- theme.sans_font = "Sans Bold "..tostring(dpi(11))
 theme.tasklist_font = theme.font
 -- Don't use sans font:
 --theme.sans_font	= "theme.font"
 
---theme.font = "Roboto Condensed Bold "..tostring(dpi(10))
---theme.sans_font = "Roboto Condensed Bold "..tostring(dpi(10))
 
 --
 --MISC:
@@ -303,5 +305,6 @@ theme.volume_icon = theme.icons_dir .. "audio.svg"
 theme.volume_low_icon = theme.icons_dir .. "powerarrow-dark/vol_low.png"
 theme.volume_mute_icon = theme.icons_dir .. "powerarrow-dark/vol_mute.png"
 theme.volume_no_icon = theme.icons_dir .. "powerarrow-dark/vol_no.png"
-
+theme.music_icon	 = theme.icons_dir .. "powerarrow-dark/note.png"
+theme.music_on_icon	 = theme.icons_dir .. "powerarrow-dark/note_on.png"
 return theme
