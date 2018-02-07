@@ -1,16 +1,19 @@
 local gears = require("gears")
 local awful = require("awful")
 local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
+local apply_dpi = xresources.apply_dpi
+local dpi = xresources.get_dpi(1)
 local create_theme = require("actionless.common_theme").create_theme
 local color_utils = require("utils.color")
 local parse = require("utils.parse")
 
 local theme_name = "lcars-xresources-hidpi"
-
 local theme_dir = awful.util.getdir("config").."themes/"..theme_name
 --local theme = dofile("/usr/share/awesome/themes/xresources/theme.lua")
 
+
+
+xresources.set_dpi(dpi,2)
 
 local debug_messages_enabled = true
 local debug_messages_enabled = false
@@ -145,13 +148,13 @@ theme.layout_floating               = layouts_icon .. "floating.png"
 theme.revelation_fg = theme.xrdb.color13
 theme.revelation_border_color = theme.xrdb.color13
 theme.revelation_bg = theme.panel_bg
-theme.revelation_font = "Monospace Bold " .. tostring(dpi(11))
+theme.revelation_font = "Monospace Bold " .. tostring(apply_dpi(10))
 -- FONTS:
-theme.font = "Roboto Condensed Bold "..tostring(dpi(11))
-theme.sans_font = "Roboto Condensed Bold "..tostring(dpi(11))
--- theme.font = "Monospace Bold "..tostring(dpi(11))
-theme.small_font = "Monospace "..tostring(dpi(8))
--- theme.sans_font = "Sans Bold "..tostring(dpi(11))
+theme.font = "Roboto Condensed Bold "..tostring(apply_dpi(10))
+theme.sans_font = "Roboto Condensed Bold "..tostring(apply_dpi(10))
+-- theme.font = "Monospace Bold "..tostring(apply_dpi(11))
+theme.small_font = "Monospace "..tostring(apply_dpi(8))
+-- theme.sans_font = "Sans Bold "..tostring(apply_dpi(11))
 theme.tasklist_font = theme.font
 -- Don't use sans font:
 --theme.sans_font	= "theme.font"
@@ -161,39 +164,42 @@ theme.tasklist_font = theme.font
 --MISC:
 --
 
-theme.basic_panel_height = dpi(8)
-theme.panel_padding_bottom = dpi(3)
-
---theme.border_width = dpi(3)
---theme.useless_gap = dpi(6)
-
---theme.border_radius = dpi(5)
---theme.notification_border_radius = dpi(10)
---theme.panel_widget_border_radius = dpi(4)
-
-theme.border_radius = dpi(8)
-theme.notification_border_radius = dpi(8)
-theme.panel_widget_border_radius = dpi(4)
-
 theme.notification_shape = function(cr,w,h)
   gears.shape.rounded_rect(
     cr, w, h, theme.notification_border_radius
   )
 end
 
-theme.border_width = dpi(4)
-theme.useless_gap = dpi(5)
-
-theme.border_width = dpi(5)
-theme.useless_gap = dpi(4)
-
-theme.border_width = dpi(4)
-theme.border_radius = dpi(5)
-
 local gtk_util = require("utils.gtk")
 local gsc = gtk_util.get_theme_variables()
-theme.border_radius = dpi(gtk.ROUNDNESS*1)
-theme.panel_widget_border_radius = dpi(gtk.ROUNDNESS*0.7)
+theme.border_radius = apply_dpi(gtk.ROUNDNESS*1)
+theme.panel_widget_border_radius = apply_dpi(gtk.ROUNDNESS*0.7)
+
+
+theme.basic_panel_height = apply_dpi(10)
+theme.panel_padding_bottom = apply_dpi(3)
+
+--theme.border_width = apply_dpi(3)
+--theme.useless_gap = apply_dpi(6)
+
+--theme.border_radius = apply_dpi(5)
+--theme.notification_border_radius = apply_dpi(10)
+--theme.panel_widget_border_radius = apply_dpi(4)
+
+-- theme.border_radius = apply_dpi(8)
+theme.notification_border_radius = apply_dpi(8)
+-- theme.panel_widget_border_radius = apply_dpi(4)
+
+
+theme.border_width = apply_dpi(4)
+theme.useless_gap = apply_dpi(5)
+
+theme.border_width = apply_dpi(5)
+theme.useless_gap = apply_dpi(4)
+
+theme.border_width = apply_dpi(4)
+theme.border_radius = apply_dpi(5)
+
 
 theme.base_border_width = theme.border_width
 theme.border_width = 0
@@ -201,13 +207,13 @@ theme.border_width = 0
 theme.panel_height = theme.basic_panel_height + theme.panel_padding_bottom
 theme.titlebar_height = theme.basic_panel_height + theme.base_border_width*2
 
-theme.left_panel_internal_corner_radius = dpi(30)
+theme.left_panel_internal_corner_radius = apply_dpi(3)
 
-theme.left_panel_width = dpi(120)
-theme.left_widget_min_height = dpi(120)
+-- theme.left_panel_width = apply_dpi(120)
+-- theme.left_widget_min_height = apply_dpi(120)
 
-theme.menu_height		= dpi(16)
-theme.menu_width		= dpi(150)
+theme.menu_height		= apply_dpi(16)
+theme.menu_width		= apply_dpi(15)
 theme.menu_border_color = theme.xrdb.color1
 
 --theme.apw_fg_color = "theme.xrdb.color8"
@@ -247,9 +253,9 @@ end
 
 --theme.titlebar_border           = theme.border_normal
 
-theme.panel_widget_spacing = dpi(10)
-theme.panel_widget_spacing_medium = dpi(8)
-theme.panel_widget_spacing_small = dpi(4)
+theme.panel_widget_spacing = apply_dpi(10)
+theme.panel_widget_spacing_medium = apply_dpi(8)
+theme.panel_widget_spacing_small = apply_dpi(4)
 
 theme.panel_widget_bg		= theme.xrdb.color3
 theme.panel_widget_bg_error = theme.xrdb.color1
