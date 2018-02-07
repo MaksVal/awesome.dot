@@ -11,9 +11,9 @@ local theme_name = "lcars-xresources-hidpi"
 local theme_dir = awful.util.getdir("config").."themes/"..theme_name
 --local theme = dofile("/usr/share/awesome/themes/xresources/theme.lua")
 
-
-
-xresources.set_dpi(dpi,2)
+awful.screen.connect_for_each_screen(function(s)
+                                        xresources.set_dpi(dpi,s)
+                                     end)
 
 local debug_messages_enabled = true
 local debug_messages_enabled = false
