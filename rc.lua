@@ -74,16 +74,16 @@ terminal 		= "konsole" or "xterm"
 terminal_run	= "konsole -e "
 editor     		= os.getenv("EDITOR") or "emacs" or "vi"
 editor_cmd 		= terminal .. " -e " .. editor
-editor_gui 		= (os.getenv("VISUAL") or "emacs -nw")
+editorGui 		= (os.getenv("VISUAL") or "emacs -nw")
 player     		= terminal .. " -e ncmpcpp"
 browser		    = "chromium-browser"
-mail            = editor_gui   .. " -e \"\(mu4e\)\""
+mail            = editorGui   .. " -e \"\(mu4e\)\""
 xscreen_lock	= "xscreensaver-command -lock"
 music_play		= "mpc toggle || ncmpc toggle || pms toggle"
 music_stop 		= "mpc stop || ncmpc stop || pms stop"
 music_prev		= "mpc prev || ncmpc prev || pms prev"
 music_next		= "mpc next || ncmpc next || pms next"
-
+filemanager		= "spacefm"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -219,7 +219,7 @@ musicwidget.album_cover_size = 50
 
 -- This option is necessary if you want the album covers to be shown
 -- for your local tracks.
-musicwidget.mpd_config = "/home/maksval/.config/mpd/mpd.conf"
+musicwidget.mpd_config = awful.util.get_xdg_config_home() .. "mpd/mpd.conf"
 
 -- Specify decorators on the left and the right side of the
 -- widget. Or just leave empty strings if you decorate the widget
@@ -370,7 +370,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
            layout = wibox.layout.fixed.horizontal,
-           spr, arrl,
+           arrl,
            musicwidget.widget,
            arrl_ld,
            pulseaudio,
@@ -382,7 +382,7 @@ awful.screen.connect_for_each_screen(function(s)
            wibox.widget.systray(),
            arrl_ld,
            mytextclock,
-           arrl_dl, spr,
+           arrl_dl,
            s.mylayoutbox,
         },
     }

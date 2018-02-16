@@ -111,15 +111,20 @@ theme.panel_tasklist = theme.xrdb.background
 theme.panel_media = theme.xrdb.color14
 theme.panel_info = theme.xrdb.color13
 theme.panel_layoutbox = theme.xrdb.color7
---theme.widget_layoutbox_bg = theme.panel_layoutbox
---theme.widget_layoutbox_fg = theme.panel_widget_fg
+-- theme.widget_layoutbox_bg = theme.panel_layoutbox
+-- theme.widget_layoutbox_fg = theme.panel_widget_fg
 
 -- WALLPAPER:
 -- Use nitrogen:
-theme.wallpaper = nil
+--theme.wallpaper = nil
 theme.wallpaper_cmd     = "nitrogen --restore"
 -- Use wallpaper tile:
---theme.wallpaper = theme_dir .. '/umbreon_pattern.png'
+-- cmd = 'find ' . awful.util.getdir("config") . "../../Pictures -type f \( -iname '*.jpg' -o -iname '*.png' \) -print0 | shuf -n1 -z"
+-- awful.spawn.easy_async(cmd,
+--                        function(stdout, stderr, reason, exit_code)
+--                           theme.wallpaper = stdout
+--                           print(stdout, stderr, cmd)
+--                        end)
 
 -- PANEL DECORATIONS:
 --
