@@ -12,6 +12,11 @@ local function brightness_control(which)
 end
 
 
+local function exit_session()
+   awful.util.spawn("gnome-session-quit --logout > /dev/null 2>&1")
+   awesome.quit()
+end
+
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
                 awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -73,7 +78,7 @@ globalkeys = gears.table.join(
              {description = "open a terminal", group = "launcher"}),
    awful.key({ modkey, "Control" }, "r", awesome.restart,
              {description = "reload awesome", group = "awesome"}),
-   awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+   awful.key({ modkey, "Shift"   }, "q", exit_session,
              {description = "quit awesome", group = "awesome"}),
 
    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
@@ -134,13 +139,13 @@ globalkeys = gears.table.join(
                 group = "launcher"
              }
    ),
-   awful.key({ modkey, "Shift" }, "d", function () awful.util.spawn("dolphin") end,
+   awful.key({ modkey, "Shift" }, "d", function () awful.util.spawn(filemanager) end,
              {
                 description = "open a file manager",
                 group = "launcher"
              }
    ),
-   awful.key({ modkey, "Shift" }, "e", function () awful.spawn(editor_gui) end,
+   awful.key({ modkey, "Shift" }, "e", function () awful.spawn(editorGui) end,
              {
                 description = "open a file manager",
                 group = "launcher"
