@@ -310,12 +310,12 @@ end
 
 
 
-theme.email_icon = theme.icons_dir .. "powerarrow-dark/mail.png"
-theme.email_on_icon = theme.icons_dir .. "powerarrow-dark/mail_on.png"
-theme.volume_icon = theme.icons_dir .. "audio.svg"
-theme.volume_low_icon = theme.icons_dir .. "powerarrow-dark/vol_low.png"
-theme.volume_mute_icon = theme.icons_dir .. "powerarrow-dark/vol_mute.png"
-theme.volume_no_icon = theme.icons_dir .. "powerarrow-dark/vol_no.png"
-theme.music_icon	 = theme.icons_dir .. "powerarrow-dark/note.png"
-theme.music_on_icon	 = theme.icons_dir .. "powerarrow-dark/note_on.png"
+theme.email_icon 		= theme.icons_dir .. "powerarrow-dark/mail.png"
+theme.email_on_icon 	= theme.icons_dir .. "powerarrow-dark/mail_on.png"
+theme.volume_icon 		= theme.icons_dir .. "powerarrow-dark/vol.png"
+theme.volume_low_icon 	= theme.icons_dir .. "powerarrow-dark/vol_low.png"
+theme.volume_mute_icon 	= theme.icons_dir .. "powerarrow-dark/vol_mute.png"
+theme.volume_no_icon 	= theme.icons_dir .. "powerarrow-dark/vol_no.png"
+theme.music_icon	 	= theme.icons_dir .. "powerarrow-dark/note.png"
+theme.music_on_icon	 	= theme.icons_dir .. "powerarrow-dark/note_on.png"
 return theme

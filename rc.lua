@@ -178,8 +178,8 @@ mykeyboardlayout = wibox.container.background(awful.widget.keyboardlayout(), "#3
 
 -- {{{ Wibar
 my_widgets = require("my_widgets")
--- Create a pulseaudio widge
-pulseaudio = wibox.container.background(my_widgets.pulseaudio({}), "#313131")
+-- Create a pulseaudio widget
+pulseaudio = wibox.container.background(my_widgets.pulseaudio({button_callback = function() print("asdsad") end}), "#313131")
 -- brightness = my_widgets.brightness({})
 
 -- -- BEGIN OF AWESOMPD WIDGET DECLARATION

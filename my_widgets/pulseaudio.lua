@@ -21,39 +21,36 @@ local function worker(args)
    local popup_position = args.popup_position or naughty.config.defaults.position
    local settings    = args.settings or function() end
    local scallback   = args.scallback or nil
-   local t_vol_yes = "<span size=\"small\"> 🔉 </span>"
-   local t_vol_no = "<span size=\"small\"> 🔈 </span>"
-   local t_vol_mute =  "<span size=\"small\" color=\"#DC0000\"> 🔇 </span>"
-   -- local t_vol_yes = " 🔉 "
-   -- local t_vol_no = " 🔈 "
-   -- local t_vol_mute =  "<span color=\"#DC0000\"> 🔇 </span>"
+   local t_vol_yes = beautiful.volume_icon
+   local t_vol_no = beautiful.volume_no_icon
+   local t_vol_mute = beautiful.volume_mute_icon
 
-   volume_text = wibox.widget {
-      align  = 'center',
-      valign = 'center',
-      markup = t_vol_no,
-      resize = true,
-      image  = beautiful.volume_icon,
-      widget = wibox.widget.textbox}
-   widget_master = wibox.container.radialprogressbar()
-   widget_master.widget 	=  volume_text
-
-   widget_master.border_color = nil
-   widget_master.min_value = 0
-   widget_master.max_value = 100
-   widget_master.value = 0
-   widget_master.paddings = 0
-   widget_master.forced_width = 30
-   widget_master.forced_height = nil
-   widget_master.border_width = 3
-   widget_master.border_color = "#313131"--beautiful.titlebar_bg_normal
-   widget_master.color = beautiful.revelation_fg
-   widget_master.opacity = 1
-   -- widget_master.wiget =  wibox.widget.textbox()
-   -- widget_master.wiget:set_text("dsa")
+   widget_master = wibox.widget {
+      {
+         id = "icon",
+         image  = t_vol_yes,
+         resize = true,
+         widget = wibox.widget.imagebox
+      },
+      border_color = nil,
+      min_value = 0,
+      max_value = 100,
+      value = 0,
+      paddings = 0,
+      -- forced_width = 30,
+      -- forced_height = nil,
+      border_width = 3,
+      border_color = "#313131",--beautiful.titlebar_bg_normal
+      color = beautiful.revelation_fg,
+      opacity = 1,
+      widget = wibox.container.radialprogressbar,
+      set_image = function(self, value)
+         self.icon.image = value
+      end
+   }
 
    local settings    = args.settings or function() end
-
+   pulseaudio.button_callback = args.button_callback or function() end
 
    pulseaudio.device = "N/A"
    pulseaudio.muted = "N/A"
@@ -76,20 +73,7 @@ local function worker(args)
          { shell, "-c", pulseaudio.cmd },
          function(stdout, stderr, reason, exit_codes)
             volume_now = {}
-            --    index =  string.match(stdout,  '\*%sindex: (%d+)') or "N/A",
-            --    device = string.match(stdout,  '\*%sindex: .*device\.product.name = \"(.+)\"[%s]+device\.serial') or "N/A",
-            --    sink   = device, -- legacy API
-            --    muted  = string.match(stdout, "\*%sindex: .*muted: (%S+)") or "N/A",
-            -- }
-
-
             local x, y = string.find(stdout,'\*%sindex: .*%d+%s-/%s-(%d+)%%%s-/%s-.%d+.%d+%s-dB')
-
-            -- pulseaudio.level = string.match(string.sub(stdout, x, y), '(%d+)%%')
-            -- pulseaudio.device = volume_now.device
-            -- pulseaudio.index = volume_now.index
-            -- pulseaudio.muted = volume_now.muted
-            -- pulseaudio.sink = volume_now.sink
 
             pulseaudio.level = string.match(string.sub(stdout, x, y), '(%d+)%%') or "N/A"
             -- pulseaudio.device = string.match(stdout,  '\*%sindex: .*device\.product.name = \"(.+)\"[%s]+device\.serial') or "N/A"
@@ -109,23 +93,15 @@ local function worker(args)
             volume_now.right = volume_now.channel[2] or "N/A"
 
             if widget_master then
-               -- volume_yes.shape.radial_progress(cr, 70, 20, .3)
                if  (pulseaudio.muted == "no") then
-                  --                widget_master:set_widget(volume_yes)
-                  volume_text:set_markup_silently(t_vol_yes)
+                  widget_master.image = t_vol_yes
                   widget_master.value = tonumber(pulseaudio.level)
-                  -- widget_master.widget.text("!!!!!")
-
                elseif (pulseaudio.muted == "yes") then
-                  --                  widget:set_widget(volume_no)
-                  volume_text:set_markup_silently(t_vol_mute)
+                  widget_master.image = t_vol_mute
                   widget_master.value = tonumber(0)
-                  -- widget_master.wiget:set_text("??")
-
                end
             end
 
-            -- pulseaudio.level = volume_now.left
             settings()
          end)
    end
@@ -140,27 +116,9 @@ local function worker(args)
       callback = pulseaudio.update
    }
 
-   -- widget:set_widget(volume_yes)
-   --   volume_text:set_text(t_vol_no)
-   -- widget_master.widget:set_text("!")
-
    -- Bind onclick event function
-   if onclick then
-      widget:buttons(awful.util.table.join(
-                        awful.button({}, 1, function() awful.util.spawn(onclick) end)
-                                          ))
-   end
-
    if widget_master then
-      -- widget_master:set_widget(volume_yes)
-      -- Hide the text when we want to popup the signal instead
-      -- if not popup_signal then
-      --    widget_master:set_widget(volume_no)
-      -- end
-      -- volume_text:set_text(t_vol_no)
-      --      widget_master.wiget:set_text("🔉")
-      --     volume_text:set_text("🔉")
-      pulseaudio:attach(widget_master,{onclick = onclick})
+      pulseaudio:attach(widget_master)
    end
 
    widget_master:connect_signal('mouse::enter', function () pulseaudio:show(0) end)
@@ -181,8 +139,6 @@ function pulseaudio:set_volume(direction, step)
       function(stdout, stderr, reason, exit_codes)
          pulseaudio.update()
       end)
-   -- os.execute(pulseaudio.cmd_set_vol:format(pulseaudio.index, direction, step ))
-   -- pulseaudio.update()
 end
 
 function pulseaudio:set_mute()
@@ -216,26 +172,12 @@ end
 
 function pulseaudio:attach(widget, args)
    local args = args or {}
-   local onclick = args.onclick
 
-   -- pulseaudio.icons     = args.icons or awful.util.getdir("config").."/"..module_path.."/my_widgets/icons/"
-   -- pulseaudio.font      = args.font or beautiful.font:sub(beautiful.font:find(""),
-   --                                                        beautiful.font:find(" "))
-   -- pulseaudio.font_size = tonumber(args.font_size) or 11
-   -- pulseaudio.fg        = args.fg or beautiful.fg_normal or "#FFFFFF"
-   -- pulseaudio.bg        = args.bg or beautiful.bg_normal or "#FFFFFF"
-   -- pulseaudio.position  = args.position or "top_right"
-
-   -- Bind onclick event function
-   if onclick then
-      widget:buttons(awful.util.table.join(
-                        awful.button({}, 1, function() awful.util.spawn(onclick) end)
-                                          ))
-   end
    widget:connect_signal('mouse::enter', function () pulseaudio:show(0) end)
    widget:connect_signal('mouse::leave', function () pulseaudio:hide() end)
 
    widget:buttons(awful.util.table.join( awful.button({ }, 1, function ()
+                                                         pulseaudio.button_callback()
                                                          pulseaudio:set_mute() end),
                                          awful.button({ }, 4, function ()
                                                          pulseaudio:set_volume('-', 5) end),
