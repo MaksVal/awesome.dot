@@ -25,7 +25,7 @@ beautiful   = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
 -- Notification library
-local naughty = require("naughty")
+ naughty = require("naughty")
 local menubar = require("menubar")
 hotkeys_popup = require("awful.hotkeys_popup").widget
 
@@ -178,9 +178,27 @@ mykeyboardlayout = wibox.container.background(awful.widget.keyboardlayout(), "#3
 
 -- {{{ Wibar
 my_widgets = require("my_widgets")
+
+-----------------------------------
+-- PULSEAUDIO Widget
+-----------------------------------
 -- Create a pulseaudio widget
-pulseaudio = wibox.container.background(my_widgets.pulseaudio({button_callback = function() print("asdsad") end}), "#313131")
--- brightness = my_widgets.brightness({})
+pulseaudio = wibox.container.background(my_widgets.pulseaudio({button_callback = function() end}), "#313131")
+-- END PULSEAUDIO --
+
+-------------------------------
+-- CPU Widget --
+-------------------------------
+-- cpu = require("my_widgets.cpu-widget")
+cpu =  wibox.container.background(my_widgets.cpu({}), "#313131")
+-- END CPU --
+
+-------------------------------
+-- MEMORY Widget --
+-------------------------------
+memory =  wibox.container.background(my_widgets.memory({}), beautiful.panel_tasklist)
+--                                   -- require("my_widgets.memory")
+-- END MEMORY --
 
 -- -- BEGIN OF AWESOMPD WIDGET DECLARATION
 
@@ -372,6 +390,10 @@ awful.screen.connect_for_each_screen(function(s)
            layout = wibox.layout.fixed.horizontal,
            arrl,
            musicwidget.widget,
+           arrl_ld,
+           cpu,
+           arrl_dl,
+           memory,
            arrl_ld,
            pulseaudio,
            arrl_dl,

@@ -25,7 +25,7 @@ local function worker(args)
    local t_vol_no = beautiful.volume_no_icon
    local t_vol_mute = beautiful.volume_mute_icon
 
-   widget_master = wibox.widget {
+   local widget_master = wibox.widget {
       {
          id = "icon",
          image  = t_vol_yes,
@@ -37,7 +37,7 @@ local function worker(args)
       max_value = 100,
       value = 0,
       paddings = 0,
-      -- forced_width = 30,
+      forced_width = 30,
       -- forced_height = nil,
       border_width = 3,
       border_color = "#313131",--beautiful.titlebar_bg_normal
