@@ -65,7 +65,7 @@ awful.rules.rules = {
          class = {
             "Emacs", "xfreerdp"
          }
-      }, properties = { screen = 2, tag = "2",switchtotag = true  }
+      }, properties = { screen = screen.count(), tag = "2",switchtotag = true  }
    },
    {
       rule_any = {
