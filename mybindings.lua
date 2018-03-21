@@ -170,7 +170,8 @@ globalkeys = gears.table.join(
              }
    ),
    -- Take a screenshot
-   awful.key({  			 }, "Print", function() kill_and_run("spectacle") end,
+   awful.key({  			 }, "Print", function()
+                run_check("gnome-screenshot -a") end, -- "gnome-screenshot -c -a -f ~/Изображения/ScreenShot/$(date  +%y%h%d-%H%M%S).png"
              {
                 description = "take a screenshot",
                 group = "launcher"

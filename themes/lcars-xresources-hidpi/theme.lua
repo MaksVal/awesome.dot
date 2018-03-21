@@ -184,6 +184,7 @@ theme.panel_widget_border_radius = apply_dpi(gtk.ROUNDNESS*0.7)
 theme.basic_panel_height = apply_dpi(10)
 theme.panel_padding_bottom = apply_dpi(3)
 
+
 --theme.border_width = apply_dpi(3)
 --theme.useless_gap = apply_dpi(6)
 
@@ -198,9 +199,6 @@ theme.notification_border_radius = apply_dpi(8)
 
 theme.border_width = apply_dpi(4)
 theme.useless_gap = apply_dpi(5)
-
-theme.border_width = apply_dpi(5)
-theme.useless_gap = apply_dpi(4)
 
 theme.border_width = apply_dpi(4)
 theme.border_radius = apply_dpi(5)
@@ -221,11 +219,20 @@ theme.menu_height		= apply_dpi(16)
 theme.menu_width		= apply_dpi(15)
 theme.menu_border_color = theme.xrdb.color1
 
+
+-- {{{ Colors
+theme.fg_normal  = "#e2dfe7"
+theme.fg_focus   = "#576ddb"
+theme.fg_urgent  = "#19171c"
+theme.bg_normal  = "#19171cCC"
+theme.bg_focus   = "#19171c00"
+theme.bg_urgent  = "#398bc6EE"
+theme.bg_systray = theme.bg_focus
+
 --theme.apw_fg_color = "theme.xrdb.color8"
 theme.apw_bg_color = "theme.xrdb.color8"
 theme.apw_mute_bg_color = "theme.xrdb.color1"
 theme.apw_mute_fg_color = "theme.xrdb.color9"
-
 
 
 --theme.taglist_squares_sel       = "theme.null"
@@ -256,7 +263,6 @@ if theme.border_radius == 0 then
 end
 
 
---theme.titlebar_border           = theme.border_normal
 
 theme.panel_widget_spacing = apply_dpi(10)
 theme.panel_widget_spacing_medium = apply_dpi(8)

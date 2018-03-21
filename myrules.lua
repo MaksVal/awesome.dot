@@ -56,7 +56,7 @@ awful.rules.rules = {
       rule_any = {
          class = {
             "Skype", "Jitsi", "Ekiga", "Pidgin",
-            "Thunderbird", "Mattermost"
+            "Thunderbird", "Mattermost", "TelegramDesktop"
          }
       }, properties = { screen = 1, tag = "4" }
    },
@@ -77,7 +77,8 @@ awful.rules.rules = {
    {
       rule_any = {
          class = {
-            "Chromium-browser", "chromium-browser-chromium", "Chromium-browser-chromium"
+            "Chromium-browser", "chromium-browser-chromium", "Chromium-browser-chromium",
+            "Google-chrome"
          }
       }, properties = { screen = awful.screen.preferred, tag = "3" }
    }

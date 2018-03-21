@@ -76,7 +76,9 @@ editor     		= os.getenv("EDITOR") or "emacs" or "vi"
 editor_cmd 		= terminal .. " -e " .. editor
 editorGui 		= (os.getenv("VISUAL") or "emacs -nw")
 player     		= terminal .. " -e ncmpcpp"
-browser		    = "chromium-browser"
+browser_run	    = "google-chrome-stable"
+browser_flags	= " --high-dpi-support=1 --force-device-scale-factor=1.2 --enable-extensions --embed-flash-fullscreen  --ignore-gpu-blacklist"
+browser			= browser_run .. browser_flags
 mail            = editorGui   .. " -e \"\(mu4e\)\""
 xscreen_lock	= "xscreensaver-command -lock"
 music_play		= "mpc toggle || ncmpc toggle || pms toggle"
@@ -120,6 +122,16 @@ function run_once(cmd)
       findme = cmd:sub(0, firstspace-1)
    end
    awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
+end
+
+function run_check(cmd)
+   local cmd = {"bash", "-c", cmd}
+   awful.spawn.easy_async(cmd, function(stdout, stderr, reason, exit_code)
+                             naughty.notify { text = "output is " .. stdout }
+                             naughty.notify({ preset = naughty.config.presets.critical,
+                                              title = "Oops...",
+                                              text = tostring(stderr) })
+                               end)
 end
 
 function kill_and_run(cmd)
