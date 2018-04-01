@@ -24,6 +24,7 @@ local function worker(args)
    local t_vol_yes = beautiful.volume_icon
    local t_vol_no = beautiful.volume_no_icon
    local t_vol_mute = beautiful.volume_mute_icon
+   local brd_color = args.brd_color or beautiful.panel_tasklist
 
    local widget_master = wibox.widget {
       {
@@ -40,7 +41,7 @@ local function worker(args)
       forced_width = 30,
       -- forced_height = nil,
       border_width = 3,
-      border_color = "#313131",--beautiful.titlebar_bg_normal
+      border_color = brd_color,
       color = beautiful.revelation_fg,
       opacity = 1,
       widget = wibox.container.radialprogressbar,

@@ -6,6 +6,7 @@ local memory = {}
 local function worker(args)
    local timeout = args.timeout or 5
    local args     = args or {}
+   local brd_color = args.brd_color or beautiful.titlebar_bg_normal
    local settings = args.settings or function() end
    local gmatch, lines, floor = string.gmatch, io.lines, math.floor
 
@@ -24,7 +25,7 @@ local function worker(args)
       forced_width = 30,
       forced_height = nil,
       border_width = 3,
-      border_color = beautiful.titlebar_bg_normal,
+      border_color = brd_color,
       color = beautiful.revelation_fg,
       opacity = 1,
       widget = wibox.container.radialprogressbar,

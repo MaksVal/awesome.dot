@@ -15,6 +15,7 @@ package.path = configpath .. "/lib/?.lua;" .. configpath .. "/lib/?/init.lua;" .
 -- Widget and layout library
 local wibox = require("wibox")
 local orglendar = require("external.orglendar")
+local lain = require("external.awesome-copycats.lain")
 my_widgets = require("my_widgets")
 
 local lunaconf = require('lunaconf')
@@ -80,7 +81,7 @@ browser_run	    = "google-chrome-stable"
 browser_flags	= " --high-dpi-support=1 --force-device-scale-factor=1.2 --enable-extensions --embed-flash-fullscreen  --ignore-gpu-blacklist"
 browser			= browser_run .. browser_flags
 mail            = editorGui   .. " -e \"\(mu4e\)\""
-xscreen_lock	= "xscreensaver-command -lock"
+xscreen_lock	= "dm-tool lock"
 music_play		= "mpc toggle || ncmpc toggle || pms toggle"
 music_stop 		= "mpc stop || ncmpc stop || pms stop"
 music_prev		= "mpc prev || ncmpc prev || pms prev"
@@ -158,6 +159,11 @@ local function client_menu_toggle_fn()
 end
 -- }}}
 
+-- {{{ Autostart
+run_once("$HOME/bin/wallpaper.sh &")
+run_once("$HOME/bin/autostart.sh &")
+
+-- }}}
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -195,20 +201,32 @@ my_widgets = require("my_widgets")
 -- PULSEAUDIO Widget
 -----------------------------------
 -- Create a pulseaudio widget
-pulseaudio = wibox.container.background(my_widgets.pulseaudio({button_callback = function() end}), "#313131")
+pulseaudio = wibox.container.background(
+   my_widgets.pulseaudio({
+                            brd_color = beautiful.panel_tasklist,
+                            button_callback = function() end})
+   , beautiful.panel_tasklist)
 -- END PULSEAUDIO --
 
 -------------------------------
 -- CPU Widget --
 -------------------------------
 -- cpu = require("my_widgets.cpu-widget")
-cpu =  wibox.container.background(my_widgets.cpu({}), "#313131")
+cpu =  wibox.container.background(
+   my_widgets.cpu({
+                     brd_color = beautiful.panel_tasklist
+                  }),
+   beautiful.panel_tasklist)
 -- END CPU --
 
 -------------------------------
 -- MEMORY Widget --
 -------------------------------
-memory =  wibox.container.background(my_widgets.memory({}), beautiful.panel_tasklist)
+memory =  wibox.container.background(
+   my_widgets.memory({
+                        brd_color = "#313131"
+                     })
+   , "#313131")
 --                                   -- require("my_widgets.memory")
 -- END MEMORY --
 
@@ -219,7 +237,7 @@ local awesompd = require('my_widgets/awesompd/awesompd')
 musicwidget = awesompd:create() -- Create awesompd widget
 musicwidget.font = "Liberation Mono" -- Set widget font
 -- musicwidget.font_color = "#FFFFFF" --Set widget font color
--- musicwidget.background = "#000000" --Set widget background color
+musicwidget.background = "#313131" --Set widget background color
 musicwidget.scrolling = true -- If true, the text in the widget will be scrolled
 musicwidget.output_size = 30 -- Set the size of widget in symbols
 musicwidget.update_interval = 10 -- Set the update interval in seconds
@@ -278,18 +296,15 @@ musicwidget:register_buttons(
 
 musicwidget:run() -- After all configuration is done, run the widget
 
+mpd =  wibox.container.background(musicwidget.widget, "#313131")
+
 -- -- END OF AWESOMPD WIDGET DECLARATION
 
 -- Create a textclock widget
 mytextclock = wibox.container.background(wibox.widget.textclock(), "#313131")
 
-mu4a_widget = wibox.widget.imagebox()
-mu4a_widget.visible = false
-
-if file_exists(awful.util.get_configuration_dir() .. "mu4a.lua") then
-   local mu4a = require("mu4a")
-   mu4a_init(mu4a_widget)
-end
+-- SYSTRAY
+local systray = wibox.widget.systray()
 
 orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"
 
@@ -352,6 +367,8 @@ local function set_wallpaper(s)
 end
 
 -- Separators
+local separators = lain.util.separators
+local arrow = separators.arrow_left
 spr = wibox.widget.textbox(' ')
 arrl = wibox.widget.imagebox(beautiful.arrl)
 arrl_dl = wibox.widget.imagebox(beautiful.arrl_dl)
@@ -395,28 +412,27 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
             s.mytaglist,
-            s.mypromptbox, arrl_dl,
+            s.mypromptbox,
+            arrow(beautiful.panel_tasklist, "#313131"),
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
            layout = wibox.layout.fixed.horizontal,
-           arrl,
-           musicwidget.widget,
-           arrl_ld,
+           arrow(beautiful.panel_tasklist, "#313131"),
+           mpd,
+           arrow("#313131", beautiful.panel_tasklist),
            cpu,
-           arrl_dl,
+           arrow(beautiful.panel_tasklist, "#313131"),
            memory,
-           arrl_ld,
+           arrow("#313131", beautiful.panel_tasklist),
            pulseaudio,
-           arrl_dl,
-           mu4a_widget,
-           arrl_ld,
+           arrow(beautiful.panel_tasklist, "#313131"),
            mykeyboardlayout,
-           arrl_dl,
-           wibox.widget.systray(),
-           arrl_ld,
+           arrow("#313131", beautiful.panel_tasklist),
+           systray,
+           arrow(beautiful.panel_tasklist, "#313131"),
            mytextclock,
-           arrl_dl,
+           arrow("#313131", beautiful.panel_tasklist),
            s.mylayoutbox,
         },
     }

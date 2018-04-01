@@ -13,7 +13,7 @@ local function worker(args)
    local args     = args or {}
    local timeout  = args.timeout or 2
    local settings = args.settings or function() end
-
+   local brd_color = args.brd_color or beautiful.titlebar_bg_normal
 
    local widget_master = wibox.widget {
       {
@@ -30,7 +30,7 @@ local function worker(args)
       forced_width = 30,
       forced_height = nil,
       border_width = 3,
-      border_color = "#313131",--beautiful.titlebar_bg_normal
+      border_color = brd_color,
       color = beautiful.revelation_fg,
       opacity = 1,
       widget = wibox.container.radialprogressbar,

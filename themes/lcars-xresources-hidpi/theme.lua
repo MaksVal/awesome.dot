@@ -227,7 +227,8 @@ theme.fg_urgent  = "#19171c"
 theme.bg_normal  = "#19171cCC"
 theme.bg_focus   = "#19171c00"
 theme.bg_urgent  = "#398bc6EE"
-theme.bg_systray = theme.bg_focus
+theme.bg_systray = beautiful.panel_tasklist --theme.bg_focus
+theme.systray_icon_spacing = 5
 
 --theme.apw_fg_color = "theme.xrdb.color8"
 theme.apw_bg_color = "theme.xrdb.color8"
