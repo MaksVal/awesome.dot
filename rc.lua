@@ -1,5 +1,11 @@
+-- Notification library
+local _dbus = dbus; dbus = nil
+naughty = require("naughty")
+dbus = _dbus
+
 -- Require the luarocks loader for luarocks dependencies
 require('luarocks.loader')
+
 
 -- Standard awesome library
 awful = require("awful")
@@ -14,8 +20,8 @@ package.path = configpath .. "/lib/?.lua;" .. configpath .. "/lib/?/init.lua;" .
 
 -- Widget and layout library
 local wibox = require("wibox")
-local orglendar = require("external.orglendar")
-local lain = require("external.awesome-copycats.lain")
+-- local orglendar = require("external.orglendar")
+local lain = require("external.lain")
 my_widgets = require("my_widgets")
 
 local lunaconf = require('lunaconf')
@@ -25,8 +31,6 @@ local lunanotify = require('lunaconf.notify')
 beautiful   = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
--- Notification library
- naughty = require("naughty")
 local menubar = require("menubar")
 hotkeys_popup = require("awful.hotkeys_popup").widget
 
@@ -56,14 +60,59 @@ do
         if in_error then return end
         in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
+        -- naughty.notify({ preset = naughty.config.presets.critical,
+        --                  title = "Oops, an error happened!",
+        --                  text = tostring(err) })
         in_error = false
     end)
 end
 -- }}}
 
+
+function run_systemd(cmd)
+   awful.spawn("systemctl --user start app@" .. cmd)
+end
+
+function run_once(cmd, args)
+   findme = cmd
+   firstspace = cmd:find(" ")
+   if firstspace then
+      findme = cmd:sub(0, firstspace-1)
+   end
+   if (args) then
+      awful.spawn.with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. " " .. args .. ")")
+   else
+      awful.spawn.with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd  .. ")")
+   end
+end
+
+function run_check(cmd)
+   local cmd = {"bash", "-c", cmd}
+   awful.spawn.easy_async(cmd, function(stdout, stderr, reason, exit_code)
+                             naughty.notify { text = "output is " .. stdout }
+                             naughty.notify({ preset = naughty.config.presets.critical,
+                                              title = "Oops...",
+                                              text = tostring(stderr) })
+                               end)
+end
+
+function kill_and_run(cmd)
+   findme = cmd
+   firstspace = cmd:find(" ")
+   if firstspace then
+      findme = cmd:sub(0, firstspace-1)
+   end
+   awful.util.spawn_with_shell("pkill -9 " .. cmd .. " ; (" .. cmd .. ")")
+end
+
+-- {{{ Autostart
+awful.spawn.easy_async("xrdb -merge .Xdefaults")
+run_systemd("wallpaper.sh")
+run_systemd("nm-applet")
+run_once("dropbox")
+run_once("wmname")
+run_once("emacs", "--daemon")
+-- }}}
 
 -- beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
 -- beautiful.init(awful.util.get_configuration_dir().. "themes/my/theme.lua")
@@ -78,7 +127,7 @@ editor_cmd 		= terminal .. " -e " .. editor
 editorGui 		= (os.getenv("VISUAL") or "emacs -nw")
 player     		= terminal .. " -e ncmpcpp"
 browser_run	    = "google-chrome-stable"
-browser_flags	= " --high-dpi-support=1 --force-device-scale-factor=1.2 --enable-extensions --embed-flash-fullscreen  --ignore-gpu-blacklist"
+browser_flags	= " --high-dpi-support=1 --force-device-scale-factor=1.3 --enable-extensions --embed-flash-fullscreen  --ignore-gpu-blacklist --password-store=basic"
 browser			= browser_run .. browser_flags
 mail            = editorGui   .. " -e \"\(mu4e\)\""
 xscreen_lock	= "dm-tool lock"
@@ -116,34 +165,6 @@ awful.layout.layouts = {
 }
 -- }}}
 
-function run_once(cmd)
-   findme = cmd
-   firstspace = cmd:find(" ")
-   if firstspace then
-      findme = cmd:sub(0, firstspace-1)
-   end
-   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
-end
-
-function run_check(cmd)
-   local cmd = {"bash", "-c", cmd}
-   awful.spawn.easy_async(cmd, function(stdout, stderr, reason, exit_code)
-                             naughty.notify { text = "output is " .. stdout }
-                             naughty.notify({ preset = naughty.config.presets.critical,
-                                              title = "Oops...",
-                                              text = tostring(stderr) })
-                               end)
-end
-
-function kill_and_run(cmd)
-   findme = cmd
-   firstspace = cmd:find(" ")
-   if firstspace then
-      findme = cmd:sub(0, firstspace-1)
-   end
-   awful.util.spawn_with_shell("pkill -9 " .. cmd .. " ; (" .. cmd .. ")")
-end
-
 -- {{{ Helper functions
 local function client_menu_toggle_fn()
     local instance = nil
@@ -159,11 +180,7 @@ local function client_menu_toggle_fn()
 end
 -- }}}
 
--- {{{ Autostart
-run_once("$HOME/bin/wallpaper.sh &")
-run_once("$HOME/bin/autostart.sh &")
 
--- }}}
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -306,7 +323,7 @@ mytextclock = wibox.container.background(wibox.widget.textclock(), "#313131")
 -- SYSTRAY
 local systray = wibox.widget.systray()
 
-orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"
+-- orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"
 
 -- MUSIC
 -- act_widgets = require("actionless.widgets.music")

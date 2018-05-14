@@ -13,7 +13,7 @@ end
 
 
 local function exit_session()
-   awful.util.spawn("gnome-session-quit --logout > /dev/null 2>&1")
+   -- awful.spawn.easy_async("xfce4-session-logout")
    awesome.quit()
 end
 

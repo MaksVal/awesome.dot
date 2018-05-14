@@ -39,7 +39,7 @@ local function worker(args)
       value = 0,
       paddings = 0,
       forced_width = 30,
-      -- forced_height = nil,
+--      forced_height = 4,
       border_width = 3,
       border_color = brd_color,
       color = beautiful.revelation_fg,
