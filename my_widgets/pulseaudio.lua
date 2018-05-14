@@ -1,7 +1,6 @@
 local wibox			= require("wibox")
 local awful 		= require("awful")
--- local beautiful 	= require("beautiful")
-local naughty		= require("naughty")
+-- local naughty		= require("naughty")
 local gears 		= require("gears")
 local module_path 	= (...):match ("(.+/)[^/]+$") or ""
 local shell   		= require("awful.util").shell

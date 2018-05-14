@@ -5,7 +5,7 @@
 
 local awful		= require("awful")
 local wibox	= require("wibox")
-local naughty		= require("naughty")
+-- local naughty		= require("naughty")
 local beautiful		= require("beautiful")
 local string		= { format	= string.format }
 local setmetatable	= setmetatable

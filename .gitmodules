@@ -13,3 +13,9 @@
 [submodule "my_widgets/awesompd"]
 	path = my_widgets/awesompd
 	url = https://github.com/alexander-yakushev/awesompd.git
+[submodule "external/alfunx-awesome"]
+	path = external/alfunx-awesome
+	url = https://github.com/alfunx/.dotfiles.git
+[submodule "external/lain"]
+	path = external/lain
+	url = https://github.com/lcpz/lain.git

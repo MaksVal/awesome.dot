@@ -4,7 +4,7 @@ local gears = require('gears')
 
 local theme = {}
 
-beautiful.init(gears.filesystem.get_configuration_dir() .. "/theme/light/theme.lua")
+-- beautiful.init(gears.filesystem.get_configuration_dir() .. "/theme/light/theme.lua")
 
 function theme.get()
 	return beautiful.get()

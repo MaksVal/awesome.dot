@@ -13,7 +13,6 @@ end
 
 
 local function exit_session()
-   -- awful.spawn.easy_async("xfce4-session-logout")
    awesome.quit()
 end
 
@@ -171,7 +170,7 @@ globalkeys = gears.table.join(
    ),
    -- Take a screenshot
    awful.key({  			 }, "Print", function()
-                run_check("gnome-screenshot -a") end, -- "gnome-screenshot -c -a -f ~/Изображения/ScreenShot/$(date  +%y%h%d-%H%M%S).png"
+                run_check("xfce4-screenshooter") end, -- "gnome-screenshot -c -a -f ~/Изображения/ScreenShot/$(date  +%y%h%d-%H%M%S).png"
              {
                 description = "take a screenshot",
                 group = "launcher"

@@ -90,7 +90,6 @@ local theme = {}
 
 theme.xrdb = xresources.get_current_theme()
 
-theme.dir = theme_dir
 theme.icons_dir = awful.util.getdir("config") .."/themes/icons/"
 
 --theme.error = theme.xrdb.color1

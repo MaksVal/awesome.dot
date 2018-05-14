@@ -13,23 +13,14 @@ require("awful.autofocus")
 freedesktop = require("freedesktop")
 gears = require("gears")
 
+-- Widget and layout library
+local wibox = require("wibox")
+-- local orglendar = require("external.orglendar")
+
 -- Add our lib folder to the require lookup path
 local configpath = gears.filesystem.get_configuration_dir()
 package.path = configpath .. "/lib/?.lua;" .. configpath .. "/lib/?/init.lua;" .. package.path .. ";./y_widgets/?/;"
 
-
--- Widget and layout library
-local wibox = require("wibox")
--- local orglendar = require("external.orglendar")
-local lain = require("external.lain")
-my_widgets = require("my_widgets")
-
-local lunaconf = require('lunaconf')
-local lunanotify = require('lunaconf.notify')
-
--- Theme handling library
-beautiful   = require("beautiful")
-local dpi = beautiful.xresources.apply_dpi
 
 local menubar = require("menubar")
 hotkeys_popup = require("awful.hotkeys_popup").widget
@@ -39,17 +30,19 @@ function file_exists(name)
    if f ~= nil then
       io.close(f) return true else return false end
 end
+ -- lunaconf = require('lunaconf')
+ -- lunanotify = require('lunaconf.notify')
 
 -- Enable VIM help for hotkeys widget when client with matching name is opened:
-require("awful.hotkeys_popup.keys.vim")
+-- require("awful.hotkeys_popup.keys.vim")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+    -- naughty.notify({ preset = naughty.config.presets.critical,
+    --                  title = "Oops, there were errors during startup!",
+    --                  text = awesome.startup_errors })
 end
 
 -- Handle runtime errors after startup
@@ -67,7 +60,6 @@ do
     end)
 end
 -- }}}
-
 
 function run_systemd(cmd)
    awful.spawn("systemctl --user start app@" .. cmd)
@@ -116,10 +108,11 @@ run_once("emacs", "--daemon")
 
 -- beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
 -- beautiful.init(awful.util.get_configuration_dir().. "themes/my/theme.lua")
-beautiful.init(awful.util.get_configuration_dir().. "themes/lcars-xresources-hidpi/theme.lua")
+-- beautiful.init(awful.util.get_configuration_dir().. "themes/lcars-xresources-hidpi/theme.lua")
 -- beautiful.init(awful.util.get_configuration_dir().. "themes/twmish/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
+-- {{{ Variable definitions
 terminal 		= "konsole" or "xterm"
 terminal_run	= "konsole -e "
 editor     		= os.getenv("EDITOR") or "emacs" or "vi"
@@ -130,7 +123,8 @@ browser_run	    = "google-chrome-stable"
 browser_flags	= " --high-dpi-support=1 --force-device-scale-factor=1.3 --enable-extensions --embed-flash-fullscreen  --ignore-gpu-blacklist --password-store=basic"
 browser			= browser_run .. browser_flags
 mail            = editorGui   .. " -e \"\(mu4e\)\""
-xscreen_lock	= "dm-tool lock"
+-- xscreen_lock	= "dm-tool lock"
+xscreen_lock	= "xscreensaver-command -lock"
 music_play		= "mpc toggle || ncmpc toggle || pms toggle"
 music_stop 		= "mpc stop || ncmpc stop || pms stop"
 music_prev		= "mpc prev || ncmpc prev || pms prev"
@@ -143,6 +137,26 @@ filemanager		= "spacefm"
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey 		= "Mod4"
 altkey     	= "Mod1"
+
+-- beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
+-- beautiful.init(awful.util.get_configuration_dir().. "themes/my/theme.lua")
+-- beautiful.init(awful.util.get_configuration_dir().. "themes/lcars-xresources-hidpi/theme.lua")
+-- beautiful.init(awful.util.get_configuration_dir().. "themes/twmish/theme.lua")
+
+-- This is used later as the default terminal and editor to run.
+
+-- Theme handling library
+beautiful   = require("beautiful")
+local chosen_theme = "powerarrow-gruvbox"
+-- local dpi 			= beautiful.xresources.apply_dpi
+local menubar 		= require("menubar")
+hotkeys_popup 		= require("awful.hotkeys_popup").widget
+local theme_path 	= string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme)
+
+beautiful.init(theme_path)
+my_widgets = require("my_widgets")
+local lain = require("lain")
+
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -180,7 +194,6 @@ local function client_menu_toggle_fn()
 end
 -- }}}
 
-
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -212,7 +225,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mykeyboardlayout = wibox.container.background(awful.widget.keyboardlayout(), "#313131")
 
 -- {{{ Wibar
-my_widgets = require("my_widgets")
+-- my_widgets = require("my_widgets")
 
 -----------------------------------
 -- PULSEAUDIO Widget
@@ -321,7 +334,12 @@ mpd =  wibox.container.background(musicwidget.widget, "#313131")
 mytextclock = wibox.container.background(wibox.widget.textclock(), "#313131")
 
 -- SYSTRAY
+beautiful.bg_systray 								= beautiful.bg_normal
+beautiful.systray_icon_spacing 						= beautiful.systray_icon_spacing
 local systray = wibox.widget.systray()
+systray.opacity = 0
+
+
 
 -- orglendar.files = gears.filesystem.get_xdg_config_home() .. "ORG/projects.org.gpg"
 
@@ -386,10 +404,6 @@ end
 -- Separators
 local separators = lain.util.separators
 local arrow = separators.arrow_left
-spr = wibox.widget.textbox(' ')
-arrl = wibox.widget.imagebox(beautiful.arrl)
-arrl_dl = wibox.widget.imagebox(beautiful.arrl_dl)
-arrl_ld = wibox.widget.imagebox(beautiful.arrl_ld)
 
 -- aliases for setup
 local al = awful.layout.layouts
@@ -430,26 +444,26 @@ awful.screen.connect_for_each_screen(function(s)
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
-            arrow(beautiful.panel_tasklist, "#313131"),
+            arrow(beautiful.bg_normal, "#313131"),
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
            layout = wibox.layout.fixed.horizontal,
-           arrow(beautiful.panel_tasklist, "#313131"),
+           arrow(beautiful.bg_normal, "#313131"),
            mpd,
-           arrow("#313131", beautiful.panel_tasklist),
+           arrow("#313131", beautiful.bg_normal),
            cpu,
-           arrow(beautiful.panel_tasklist, "#313131"),
+           arrow(beautiful.bg_normal, "#313131"),
            memory,
-           arrow("#313131", beautiful.panel_tasklist),
+           arrow("#313131", beautiful.bg_normal),
            pulseaudio,
-           arrow(beautiful.panel_tasklist, "#313131"),
+           arrow(beautiful.bg_normal, "#313131"),
            mykeyboardlayout,
-           arrow("#313131", beautiful.panel_tasklist),
+           arrow("#313131", beautiful.bg_normal),
            systray,
-           arrow(beautiful.panel_tasklist, "#313131"),
+           arrow(beautiful.bg_normal, "#313131"),
            mytextclock,
-           arrow("#313131", beautiful.panel_tasklist),
+           arrow("#313131", beautiful.bg_normal),
            s.mylayoutbox,
         },
     }

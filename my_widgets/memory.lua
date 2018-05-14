@@ -1,6 +1,7 @@
 local gears 		= require("gears")
 local wibox			= require("wibox")
 local lain 			= require("lain")
+
 local memory = {}
 
 local function worker(args)

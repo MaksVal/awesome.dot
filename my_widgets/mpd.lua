@@ -8,7 +8,7 @@
 --]]
 
 local escape_f     = require("awful.util").escape
-local naughty      = require("naughty")
+-- local naughty      = require("naughty")
 local wibox        = require("wibox")
 
 local os           = { execute = os.execute,
