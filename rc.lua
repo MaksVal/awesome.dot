@@ -232,9 +232,8 @@ mykeyboardlayout = wibox.container.background(awful.widget.keyboardlayout(), "#3
 -----------------------------------
 -- Create a pulseaudio widget
 pulseaudio = wibox.container.background(
-   my_widgets.pulseaudio({
-                            brd_color = beautiful.panel_tasklist,
-                            button_callback = function() end})
+   my_widgets.pulseaudio({ brd_color = beautiful.bg_normal,
+                           button_callback = function() end})
    , beautiful.panel_tasklist)
 -- END PULSEAUDIO --
 
@@ -243,9 +242,7 @@ pulseaudio = wibox.container.background(
 -------------------------------
 -- cpu = require("my_widgets.cpu-widget")
 cpu =  wibox.container.background(
-   my_widgets.cpu({
-                     brd_color = beautiful.panel_tasklist
-                  }),
+   my_widgets.cpu({ brd_color = beautiful.bg_normal}),
    beautiful.panel_tasklist)
 -- END CPU --
 
@@ -253,11 +250,8 @@ cpu =  wibox.container.background(
 -- MEMORY Widget --
 -------------------------------
 memory =  wibox.container.background(
-   my_widgets.memory({
-                        brd_color = "#313131"
-                     })
-   , "#313131")
---                                   -- require("my_widgets.memory")
+   my_widgets.memory({ brd_color = beautiful.bg_normal }),
+   beautiful.panel_tasklist)
 -- END MEMORY --
 
 -- -- BEGIN OF AWESOMPD WIDGET DECLARATION
@@ -285,7 +279,7 @@ musicwidget.jamendo_format = awesompd.FORMAT_MP3
 
 -- Specify the browser you use so awesompd can open links from
 -- Jamendo in it.
-musicwidget.browser = "chromium"
+musicwidget.browser = browser
 
 -- If true, song notifications for Jamendo tracks and local tracks
 -- will also contain album cover image.
@@ -431,10 +425,19 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+    s.mytasklist = awful.widget.tasklist(
+       s,
+       awful.widget.tasklist.filter.currenttags,
+       tasklist_buttons,
+       {
+          shape  = gears.shape.transform(gears.shape.powerline)
+          : translate(0, 2, 0.1)
+
+       }
+    )
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top", height = 35, screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -453,9 +456,9 @@ awful.screen.connect_for_each_screen(function(s)
            mpd,
            arrow("#313131", beautiful.bg_normal),
            cpu,
-           arrow(beautiful.bg_normal, "#313131"),
+           arrow(beautiful.bg_normal, beautiful.bg_normal),
            memory,
-           arrow("#313131", beautiful.bg_normal),
+           arrow(beautiful.bg_normal, beautiful.bg_normal),
            pulseaudio,
            arrow(beautiful.bg_normal, "#313131"),
            mykeyboardlayout,

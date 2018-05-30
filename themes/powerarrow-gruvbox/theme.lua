@@ -98,6 +98,19 @@ theme.bg_urgent                                 = red_light
 theme.bg_systray 								= "#313131"
 theme.systray_icon_spacing 						=  0
 
+theme.border_width                              = dpi(4)
+-- theme.border_radius                             = dpi(8)
+theme.border_radius                             = dpi(0)
+theme.menu_height                               = dpi(20)
+theme.menu_width                                = dpi(250)
+theme.tasklist_plain_task_name                  = false
+theme.tasklist_disable_icon                     = true
+theme.tasklist_spacing                          = dpi(3)
+theme.useless_gap                               = dpi(14)
+theme.systray_icon_spacing                      = dpi(4)
+
+theme.snap_bg                                   = theme.border_focus
+
 theme.taglist_font                              = theme.font_bold
 theme.taglist_fg_normal                         = theme.fg_normal
 theme.taglist_fg_focus                          = theme.fg_focus
@@ -116,9 +129,13 @@ theme.tasklist_fg_normal                        = bw7
 theme.tasklist_fg_focus                         = bw9
 theme.tasklist_fg_minimize                      = bw5
 theme.tasklist_fg_urgent                        = red_light
-theme.tasklist_bg_normal                        = bw3
-theme.tasklist_bg_focus                         = bw4
+theme.tasklist_bg_normal                        = bw0
+theme.tasklist_bg_focus                         = bw0_h
 theme.tasklist_bg_urgent                        = bw2
+theme.tasklist_shape_border_color				= theme.border_normal
+theme.tasklist_shape_border_color_focus 	 	= theme.border_focus
+theme.tasklist_shape_border_width		 	 	= dpi(2)
+
 
 theme.titlebar_fg_normal                        = bw5
 theme.titlebar_fg_focus                         = bw8
@@ -137,19 +154,6 @@ theme.hotkeys_shape                             = function(cr, width, height)
 theme.prompt_bg                                 = bw2
 theme.prompt_fg                                 = theme.fg_normal
 theme.bg_systray                                = theme.tasklist_bg_normal
-
-theme.border_width                              = dpi(4)
--- theme.border_radius                             = dpi(8)
-theme.border_radius                             = dpi(0)
-theme.menu_height                               = dpi(20)
-theme.menu_width                                = dpi(250)
-theme.tasklist_plain_task_name                  = true
-theme.tasklist_disable_icon                     = true
-theme.tasklist_spacing                          = dpi(3)
-theme.useless_gap                               = dpi(14)
-theme.systray_icon_spacing                      = dpi(4)
-
-theme.snap_bg                                   = theme.border_focus
 -- theme.snap_shape                                = function(cr, w, h)
 --                                                       gears.shape.rounded_rect(cr, w, h, theme.border_radius or 0)
 --                                                   end
