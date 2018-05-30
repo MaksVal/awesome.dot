@@ -71,7 +71,7 @@ awful.rules.rules = {
    {
       rule_any = {
          class = {
-            "Dolphin", "dolphin"
+            "Dolphin", "dolphin", "Nautilus", "Spacefm"
          }
       }, properties = { screen = awful.screen.preferred, tag = "2" }
    },
