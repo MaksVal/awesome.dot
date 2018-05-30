@@ -132,13 +132,13 @@ globalkeys = gears.table.join(
    -- awful.key({ modkey }, "c", function () os.execute("xsel -p -o | xsel -i -b") end),
 
    -- User programs
-   awful.key({ modkey, "Shift"   }, "b", function () awful.util.spawn(browser) end,
+   awful.key({ modkey, "Shift"   }, "b", function () awful.spawn(browser) end,
              {
                 description = "open a browser",
                 group = "launcher"
              }
    ),
-   awful.key({ modkey, "Shift" }, "d", function () awful.util.spawn(filemanager) end,
+   awful.key({ modkey, "Shift" }, "d", function () awful.spawn(filemanager) end,
              {
                 description = "open a file manager",
                 group = "launcher"
@@ -150,7 +150,7 @@ globalkeys = gears.table.join(
                 group = "launcher"
              }
    ),
-   awful.key({ modkey,	       }, "e", function () awful.util.spawn(mail) end,
+   awful.key({ modkey,	       }, "e", function () awful.spawn(mail) end,
              {
                 description = "open a mail client",
                 group = "launcher"
@@ -162,7 +162,7 @@ globalkeys = gears.table.join(
                 group = "launcher"
              }
    ),
-   awful.key({ modkey,       }, "XF86Calculator", function () awful.util.spawn("gcalctool") end,
+   awful.key({ modkey,       }, "XF86Calculator", function () awful.spawn("gcalctool") end,
              {
                 description = "open a calculator",
                 group = "launcher"
@@ -179,7 +179,7 @@ globalkeys = gears.table.join(
 
 
    -- Other
-   awful.key({                 }, "Pause",  function() awful.util.spawn(xscreen_lock) end,
+   awful.key({                 }, "Pause",  function() awful.spawn(xscreen_lock) end,
              {
                 description = "lock of a screen",
                 group = "screen"
@@ -189,7 +189,7 @@ globalkeys = gears.table.join(
    -- MPD control
    awful.key({			 }, "XF86AudioPlay",
              function ()
-                awful.util.spawn_with_shell(music_play)
+                awful.spawn_with_shell(music_play)
                 mpdwidget.update()
              end,
              {
@@ -199,7 +199,7 @@ globalkeys = gears.table.join(
    ),
    awful.key({			 }, "XF86AudioStop",
              function ()
-                awful.util.spawn_with_shell(music_stop)
+                awful.spawn_with_shell(music_stop)
                 mpdwidget.update()
              end,
              {
@@ -209,7 +209,7 @@ globalkeys = gears.table.join(
    ),
    awful.key({ }, "XF86AudioPrev",
              function ()
-                awful.util.spawn_with_shell(music_prev)
+                awful.spawn_with_shell(music_prev)
                 mpdwidget.update()
              end,      {
                 description = "Previous",
@@ -219,7 +219,7 @@ globalkeys = gears.table.join(
 
    awful.key({ }, "XF86AudioNext",
              function ()
-                awful.util.spawn_with_shell(music_next)
+                awful.spawn_with_shell(music_next)
                 mpdwidget.update()
              end,
              {
@@ -232,7 +232,7 @@ globalkeys = gears.table.join(
    -- MPD control
    awful.key({ altkey, "Control" }, "Up",
              function ()
-                awful.util.spawn_with_shell(music_play)
+                awful.spawn_with_shell(music_play)
                 mpdwidget.update()
              end,
              {
@@ -243,7 +243,7 @@ globalkeys = gears.table.join(
 
    awful.key({ altkey, "Control" }, "Down",
              function ()
-                awful.util.spawn_with_shell(music_stop)
+                awful.spawn_with_shell(music_stop)
                 mpdwidget.update()
              end,
              {
@@ -254,7 +254,7 @@ globalkeys = gears.table.join(
 
    awful.key({ altkey, "Control" }, "Left",
              function ()
-                awful.util.spawn_with_shell(music_prev)
+                awful.spawn_with_shell(music_prev)
                 mpdwidget.update()
              end,
              {
@@ -264,7 +264,7 @@ globalkeys = gears.table.join(
    ),
    awful.key({ altkey, "Control" }, "Right",
              function ()
-                awful.util.spawn_with_shell(music_next)
+                awful.spawn_with_shell(music_next)
                 mpdwidget.update()
              end,
              {

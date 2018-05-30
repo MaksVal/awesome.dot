@@ -130,6 +130,7 @@ music_stop 		= "mpc stop || ncmpc stop || pms stop"
 music_prev		= "mpc prev || ncmpc prev || pms prev"
 music_next		= "mpc next || ncmpc next || pms next"
 filemanager		= "nautilus"
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
