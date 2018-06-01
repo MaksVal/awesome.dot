@@ -67,6 +67,7 @@ local os, math, string = os, math, string
 
 local theme      			= { }
 local theme_name 			= "powerarrow-gruvbox"
+theme.shape		 			= { }
 theme.dir		 			= awful.util.getdir("config").."themes/"..theme_name
 theme.xrdb 		 			= xresources.get_current_theme()
 theme.icons_dir = awful.util.getdir("config").."/themes/icons/" ..theme_name.. "/"
@@ -79,6 +80,11 @@ theme.wallpaper_blur        = theme.dir .. "/wallpapers/matterhorn_blur.jpg"
 
 local font_name                                 = "Iosevka Custom"
 local font_size                                 = "11"
+
+function theme.shape.powerline (cr, width, height)
+   gears.shape.powerline(cr, width, height, -10)
+end
+
 theme.font                                      = font_name .. " " ..                         font_size
 theme.font_bold                                 = font_name .. " " .. "Bold"        .. " " .. font_size
 theme.font_italic                               = font_name .. " " .. "Italic"      .. " " .. font_size
@@ -88,6 +94,7 @@ theme.font_big                                  = font_name .. " " .. "Bold"    
 theme.border_normal                             = bw2
 theme.border_focus                              = bw5
 theme.border_marked                             = bw5
+theme.border_bar_normal                         = theme.border_normal
 
 theme.fg_normal                                 = bw9
 theme.fg_focus                                  = red_light
@@ -96,17 +103,19 @@ theme.bg_normal                                 = bw0
 theme.bg_focus                                  = bw2
 theme.bg_urgent                                 = red_light
 theme.bg_systray 								= "#313131"
-theme.systray_icon_spacing 						=  0
 
 theme.border_width                              = dpi(4)
--- theme.border_radius                             = dpi(8)
-theme.border_radius                             = dpi(0)
+-- theme.border_width                              = dpi(4)
+theme.border_bar_width                          = dpi(2)
+theme.border_radius                             = dpi(1)
 theme.menu_height                               = dpi(20)
 theme.menu_width                                = dpi(250)
 theme.tasklist_plain_task_name                  = false
 theme.tasklist_disable_icon                     = true
 theme.tasklist_spacing                          = dpi(3)
 theme.useless_gap                               = dpi(14)
+
+theme.bg_systray 								= theme.bg_normal
 theme.systray_icon_spacing                      = dpi(4)
 
 theme.snap_bg                                   = theme.border_focus
@@ -132,10 +141,10 @@ theme.tasklist_fg_urgent                        = red_light
 theme.tasklist_bg_normal                        = bw0
 theme.tasklist_bg_focus                         = bw0_h
 theme.tasklist_bg_urgent                        = bw2
-theme.tasklist_shape_border_color				= theme.border_normal
+theme.tasklist_shape_border_color				= theme.border_bar_normal
 theme.tasklist_shape_border_color_focus 	 	= theme.border_focus
 theme.tasklist_shape_border_width		 	 	= dpi(2)
-
+theme.tasklist_shape 							= theme.shape.powerline
 
 theme.titlebar_fg_normal                        = bw5
 theme.titlebar_fg_focus                         = bw8
@@ -143,6 +152,9 @@ theme.titlebar_fg_marked                        = bw8
 theme.titlebar_bg_normal                        = theme.border_normal
 theme.titlebar_bg_focus                         = theme.border_focus
 theme.titlebar_bg_marked                        = theme.border_marked
+
+theme.wibar_border_width 						= theme.border_radius
+theme.wibar_border_color						= theme.border_normal
 
 theme.hotkeys_border_width                      = dpi(30)
 theme.hotkeys_border_color                      = bw0
@@ -287,5 +299,6 @@ theme.music_icon	 				= theme.icons_dir .. "note.png"
 theme.music_on_icon	 				= theme.icons_dir .. "note_on.png"
 theme.memory						= theme.icons_dir .. "mem.png"
 theme.cpu							= theme.icons_dir .. "cpu.png"
+
 
 return theme

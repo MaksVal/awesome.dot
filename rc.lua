@@ -327,10 +327,13 @@ mpd =  wibox.container.background(musicwidget.widget, "#313131")
 
 -- Create a textclock widget
 mytextclock = wibox.container.background(wibox.widget.textclock(), "#313131")
+mytextclock.shape 				= beautiful.shape.powerline
+mytextclock.shape_border_width 	= beautiful.border_bar_width
+mytextclock.shape_border_color 	= beautiful.border_bar_normal
+
+
 
 -- SYSTRAY
-beautiful.bg_systray 								= beautiful.bg_normal
-beautiful.systray_icon_spacing 						= beautiful.systray_icon_spacing
 local systray = wibox.widget.systray()
 systray.opacity = 0
 
@@ -416,26 +419,23 @@ awful.screen.connect_for_each_screen(function(s)
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    s.mylayoutbox = awful.widget.layoutbox(s)
+    s.mylayoutbox = wibox.container.background(awful.widget.layoutbox(s))
+    s.mylayoutbox.shape = beautiful.shape.powerline
+    s.mylayoutbox.shape_border_width 	= beautiful.border_bar_width
+    s.mylayoutbox.shape_border_color 	= beautiful.border_bar_normal
+    s.mylayoutbox.shape_clip			= true
+
     s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+                             awful.button({ }, 1, function () awful.layout.inc( 1) end),
+                             awful.button({ }, 3, function () awful.layout.inc(-1) end),
+                             awful.button({ }, 4, function () awful.layout.inc( 1) end),
+                             awful.button({ }, 5, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(
-       s,
-       awful.widget.tasklist.filter.currenttags,
-       tasklist_buttons,
-       {
-          shape  = gears.shape.transform(gears.shape.powerline)
-          : translate(0, 2, 0.1)
-
-       }
-    )
+    s.mytasklist =
+       awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", height = 35, screen = s })
@@ -444,16 +444,14 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox:setup {
        layout = wibox.layout.align.horizontal,
         { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            s.mytaglist,
-            s.mypromptbox,
-            arrow(beautiful.bg_normal, "#313131"),
+           layout = wibox.layout.fixed.horizontal,
+           mylauncher,
+           s.mytaglist,
+           s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
+        s.mytasklist,
         { -- Right widgets
            layout = wibox.layout.fixed.horizontal,
-           arrow(beautiful.bg_normal, "#313131"),
            mpd,
            arrow("#313131", beautiful.bg_normal),
            cpu,
@@ -467,7 +465,6 @@ awful.screen.connect_for_each_screen(function(s)
            systray,
            arrow(beautiful.bg_normal, "#313131"),
            mytextclock,
-           arrow("#313131", beautiful.bg_normal),
            s.mylayoutbox,
         },
     }
