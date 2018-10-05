@@ -1,5 +1,5 @@
 local awful = require('awful')
-local lunaconf = require('lunaconf')
+--local lunaconf = require('lunaconf')
 local pulseaudio = my_widgets.pulseaudio
 
 local function brightness_control(which)
@@ -109,8 +109,12 @@ globalkeys = gears.table.join(
              {description = "restore minimized", group = "client"}),
 
    -- Prompt
-   awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-             {description = "run prompt", group = "launcher"}),
+   awful.key({ modkey },            "r",
+             function ()
+                awful.screen.focused().mypromptbox:run()
+             end,
+             { description = "run prompt", group = "launcher" }
+   ),
 
    awful.key({ modkey }, "x",
              function ()
@@ -141,6 +145,15 @@ globalkeys = gears.table.join(
    awful.key({ modkey, "Shift" }, "d", function () awful.spawn(filemanager) end,
              {
                 description = "open a file manager",
+                group = "launcher"
+             }
+   ),
+   awful.key({ modkey, "Control" }, "d",
+             function ()
+                awful.spawn(cfilemanager, {tag = "2"})
+             end,
+             {
+                description = "open a console file manager",
                 group = "launcher"
              }
    ),
@@ -307,49 +320,49 @@ globalkeys = gears.table.join(
                 description = "Brightness small DOWN",
                 group = "Control of a screen"
              }
-   ),
-   awful.key({}, 'XF86AudioRaiseVolume',
-             function()
-                pulseaudio:set_volume('+', 5)
-                local dialog = lunaconf.dialogs.bar(beautiful.volume_icon, 1)
-                dialog:set_value(pulseaudio.level)
-                dialog:show()
-             end,
-             {
-                description = "Volume UP",
-                group = "Management of a periphery"
-             }
-   ),
-   awful.key({}, 'XF86AudioLowerVolume',
-             function()
-                pulseaudio:set_volume('-', 5)
-                local dialog = lunaconf.dialogs.bar(beautiful.volume_low_icon, 1)
-                dialog:set_value(pulseaudio.level)
-                dialog:show()
-             end,
-             {
-                description = "Volume DOWN",
-                group = "Management of a periphery"
-             }
-   ),
-   awful.key({}, 'XF86AudioMute',
-             function()
-                pulseaudio:set_mute()
-                if ( pulseaudio.muted == "no" ) then
-                   local dialog = lunaconf.dialogs.bar(beautiful.volume_mute_icon, 1)
-                   dialog:set_value(0)
-                   dialog:show()
-                elseif (pulseaudio.muted == "yes") then
-                   local dialog = lunaconf.dialogs.bar(beautiful.volume_icon, 1)
-                   dialog:set_value(pulseaudio.level)
-                   dialog:show()
-                end
-             end,
-             {
-                description = "Volume DOWN",
-                group = "Management of a periphery"
-             }
    )
+   -- awful.key({}, 'XF86AudioRaiseVolume',
+   --           function()
+   --              pulseaudio:set_volume('+', 5)
+   --              local dialog = lunaconf.dialogs.bar(beautiful.volume_icon, 1)
+   --              dialog:set_value(pulseaudio.level)
+   --              dialog:show()
+   --           end,
+   --           {
+   --              description = "Volume UP",
+   --              group = "Management of a periphery"
+   --           }
+   -- ),
+   -- awful.key({}, 'XF86AudioLowerVolume',
+   --           function()
+   --              pulseaudio:set_volume('-', 5)
+   --              local dialog = lunaconf.dialogs.bar(beautiful.volume_low_icon, 1)
+   --              dialog:set_value(pulseaudio.level)
+   --              dialog:show()
+   --           end,
+   --           {
+   --              description = "Volume DOWN",
+   --              group = "Management of a periphery"
+   --           }
+   -- ),
+   -- awful.key({}, 'XF86AudioMute',
+   --           function()
+   --              pulseaudio:set_mute()
+   --              if ( pulseaudio.muted == "no" ) then
+   --                 local dialog = lunaconf.dialogs.bar(beautiful.volume_mute_icon, 1)
+   --                 dialog:set_value(0)
+   --                 dialog:show()
+   --              elseif (pulseaudio.muted == "yes") then
+   --                 local dialog = lunaconf.dialogs.bar(beautiful.volume_icon, 1)
+   --                 dialog:set_value(pulseaudio.level)
+   --                 dialog:show()
+   --              end
+   --           end,
+   --           {
+   --              description = "Volume DOWN",
+   --              group = "Management of a periphery"
+   --           }
+   -- )
 )
 
 clientkeys = gears.table.join(

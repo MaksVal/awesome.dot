@@ -40,9 +40,9 @@ end
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    -- naughty.notify({ preset = naughty.config.presets.critical,
-    --                  title = "Oops, there were errors during startup!",
-    --                  text = awesome.startup_errors })
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "Oops, there were errors during startup!",
+                     text = awesome.startup_errors })
 end
 
 -- Handle runtime errors after startup
@@ -53,9 +53,9 @@ do
         if in_error then return end
         in_error = true
 
-        -- naughty.notify({ preset = naughty.config.presets.critical,
-        --                  title = "Oops, an error happened!",
-        --                  text = tostring(err) })
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "Oops, an error happened!",
+                         text = tostring(err) })
         in_error = false
     end)
 end
@@ -103,7 +103,7 @@ run_systemd("wallpaper.sh")
 run_systemd("nm-applet")
 run_once("dropbox")
 run_once("wmname")
-run_once("emacs", "--daemon")
+-- run_once("emacs", "--daemon")
 -- }}}
 
 -- beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
@@ -130,6 +130,7 @@ music_stop 		= "mpc stop || ncmpc stop || pms stop"
 music_prev		= "mpc prev || ncmpc prev || pms prev"
 music_next		= "mpc next || ncmpc next || pms next"
 filemanager		= "nautilus"
+cfilemanager	= terminal .. " -e ranger"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -231,28 +232,92 @@ mykeyboardlayout = wibox.container.background(awful.widget.keyboardlayout(), "#3
 -----------------------------------
 -- PULSEAUDIO Widget
 -----------------------------------
+
+local volume = lain.widget.pulsebar ({ cmd =  "pacmd list-sinks | sed -n -e '/\* index: /p'  -e '0,/*/d' -e '/base volume/d' -e '/volume:/p' -e '/muted:/p' -e '/device\\.string/p'",
+                                       shape            = gears.shape.rounded_bar,
+                                       bar_shape        = gears.shape.rounded_bar,
+                                     })
+
+volume.icon = wibox.widget {
+   id = "icon",
+   image = beautiful.volume_icon,
+   resize = true,
+   widget = wibox.widget.imagebox
+}
+
+volume.bar:buttons(awful.util.table.join(
+    awful.button({}, 1, function() -- left click
+        awful.spawn("pavucontrol")
+    end),
+    awful.button({}, 2, function() -- middle click
+          os.execute(string.format("pactl set-sink-volume %d 100%%", volume.device))
+          -- volume.update()
+          volume.notify()
+
+    end),
+    awful.button({}, 3, function() -- right click
+        os.execute(string.format("pactl set-sink-mute %d toggle", volume.device))
+        -- volume.update()
+        volume.notify()
+    end),
+    awful.button({}, 4, function() -- scroll up
+          os.execute(string.format("pactl set-sink-volume %s +1%%", volume.device ))
+          -- volume.update()
+          volume.notify()
+    end),
+    awful.button({}, 5, function() -- scroll down
+          os.execute(string.format("pactl set-sink-volume %d -1%%", volume.device ))
+          -- volume.update()
+          volume.notify()
+    end)
+))
+
 -- Create a pulseaudio widget
 pulseaudio = wibox.container.background(
    my_widgets.pulseaudio({ brd_color = beautiful.bg_normal,
                            button_callback = function() end})
    , beautiful.panel_tasklist)
+
 -- END PULSEAUDIO --
 
 -------------------------------
 -- CPU Widget --
 -------------------------------
+local cpu = lain.widget.cpu({
+    settings = function()
+       widget:set_markup(cpu_now.usage .. "%")
+    end })
+
+cpu.icon = wibox.widget {
+   id = "icon",
+   image = beautiful.cpu,
+   resize = true,
+   widget = wibox.widget.imagebox
+}
+
 -- cpu = require("my_widgets.cpu-widget")
-cpu =  wibox.container.background(
-   my_widgets.cpu({ brd_color = beautiful.bg_normal}),
-   beautiful.panel_tasklist)
+-- cpu =  wibox.container.background(
+--    my_widgets.cpu({ brd_color = beautiful.bg_normal}),
+--    beautiful.panel_tasklist)
 -- END CPU --
 
 -------------------------------
 -- MEMORY Widget --
 -------------------------------
-memory =  wibox.container.background(
-   my_widgets.memory({ brd_color = beautiful.bg_normal }),
-   beautiful.panel_tasklist)
+local mem = lain.widget.mem({
+	settings = function()
+       widget:set_markup(mem_now.perc .. "%")
+    end })
+mem.icon = wibox.widget {
+   id = "icon",
+   image = beautiful.memory,
+   resize = true,
+   widget = wibox.widget.imagebox
+}
+
+-- memory =  wibox.container.background(
+--    my_widgets.memory({ brd_color = beautiful.bg_normal }),
+--    beautiful.panel_tasklist)
 -- END MEMORY --
 
 -- -- BEGIN OF AWESOMPD WIDGET DECLARATION
@@ -379,13 +444,7 @@ local tasklist_buttons = gears.table.join(
                                                   c:raise()
                                               end
                                           end),
-                     awful.button({ }, 3, client_menu_toggle_fn()),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+                     awful.button({ }, 3, client_menu_toggle_fn()))
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -435,8 +494,11 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create a tasklist widget
     s.mytasklist =
-       awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+       awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons,
+                             nil, nil,
+                             wibox.layout.flex.horizontal()
 
+       )
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", height = 35, screen = s })
 
@@ -454,11 +516,11 @@ awful.screen.connect_for_each_screen(function(s)
            layout = wibox.layout.fixed.horizontal,
            mpd,
            arrow("#313131", beautiful.bg_normal),
-           cpu,
+           cpu.icon, cpu.widget,
            arrow(beautiful.bg_normal, beautiful.bg_normal),
-           memory,
+           mem.icon, mem.widget,
            arrow(beautiful.bg_normal, beautiful.bg_normal),
-           pulseaudio,
+           volume.icon, volume.bar,
            arrow(beautiful.bg_normal, "#313131"),
            mykeyboardlayout,
            arrow("#313131", beautiful.bg_normal),
