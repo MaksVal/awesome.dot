@@ -1,15 +1,18 @@
 [submodule "freedesktop"]
 	path = freedesktop
-	url = https://github.com/copycat-killer/awesome-freedesktop.git
+	url = git@github.com:copycat-killer/awesome-freedesktop.git
 [submodule "external/timoroes_awesome-config"]
 	path = external/timoroes_awesome-config
-	url = https://github.com/timroes/awesome-config.git
+	url = git@github.com:timroes/awesome-config.git
 [submodule "my_widgets/awesompd"]
 	path = my_widgets/awesompd
-	url = https://github.com/alexander-yakushev/awesompd.git
+	url = git@github.com:alexander-yakushev/awesompd.git
 [submodule "external/alfunx-awesome"]
 	path = external/alfunx-awesome
-	url = https://github.com/alfunx/.dotfiles.git
+	url = git@github.com:alfunx/.dotfiles.git
 [submodule "external/lain"]
 	path = external/lain
-	url = https://github.com/lcpz/lain.git
+	url = git@github.com:lcpz/lain.git
+[submodule "external/actionless/awesome_config"]
+	path = external/actionless/awesome_config
+	url = git@github.com:actionless/awesome_config.git
