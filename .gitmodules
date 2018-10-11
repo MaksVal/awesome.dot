@@ -1,12 +1,6 @@
 [submodule "freedesktop"]
 	path = freedesktop
 	url = https://github.com/copycat-killer/awesome-freedesktop.git
-[submodule "external/FeatherWings.fixed"]
-	path = external/FeatherWings.fixed
-	url = https://github.com/ProfessorOptics/FeatherWings.fixed
-[submodule "external/FeatherWings"]
-	path = external/FeatherWings
-	url = https://github.com/ProfessorOptics/FeatherWings.git
 [submodule "external/timoroes_awesome-config"]
 	path = external/timoroes_awesome-config
 	url = https://github.com/timroes/awesome-config.git
