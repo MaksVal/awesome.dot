@@ -49,7 +49,7 @@ awful.rules.rules = {
    {
       rule_any = {
          class = {
-            "konsole"
+            "konsole", "Gnome-terminal"
          }
       }, properties = { screen = 1, tag = "1" }
    },

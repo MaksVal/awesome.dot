@@ -4,7 +4,7 @@ naughty = require("naughty")
 dbus = _dbus
 
 -- Require the luarocks loader for luarocks dependencies
-require('luarocks.loader')
+-- require('luarocks.loader')
 
 
 -- Standard awesome library
@@ -99,9 +99,9 @@ end
 
 -- {{{ Autostart
 awful.spawn.easy_async("xrdb -merge .Xdefaults")
-run_systemd("wallpaper.sh")
-run_systemd("nm-applet")
-run_once("dropbox")
+-- run_systemd("wallpaper.sh")
+-- run_systemd("nm-applet")
+-- run_once("dropbox")
 run_once("wmname")
 -- run_once("emacs", "--daemon")
 -- }}}
@@ -113,16 +113,16 @@ run_once("wmname")
 
 -- This is used later as the default terminal and editor to run.
 -- {{{ Variable definitions
-terminal 		= "konsole" or "xterm"
-terminal_run	= "konsole -e "
+terminal 		= "gnome-terminal"
+terminal_run	= terminal .. " -e "
 editor     		= os.getenv("EDITOR") or "emacs" or "vi"
 editor_cmd 		= terminal .. " -e " .. editor
-editorGui 		= (os.getenv("VISUAL") or "emacs -nw")
+editorGui 		= os.getenv("VISUAL") or "emacsclient -c -a emacs" or nil
 player     		= terminal .. " -e ncmpcpp"
 browser_run	    = "google-chrome-stable"
 browser_flags	= " --high-dpi-support=1 --force-device-scale-factor=1.3 --enable-extensions --embed-flash-fullscreen  --ignore-gpu-blacklist --password-store=basic"
 browser			= browser_run .. browser_flags
-mail            = editorGui   .. " -e \"\(mu4e\)\""
+-- mail            = editorGui   .. " -e \"\(mu4e\)\""
 -- xscreen_lock	= "dm-tool lock"
 xscreen_lock	= "xscreensaver-command -lock"
 music_play		= "mpc toggle || ncmpc toggle || pms toggle"
@@ -233,7 +233,7 @@ mykeyboardlayout = wibox.container.background(awful.widget.keyboardlayout(), "#3
 -- PULSEAUDIO Widget
 -----------------------------------
 
-local volume = lain.widget.pulsebar ({ cmd =  "pacmd list-sinks | sed -n -e '/\* index: /p'  -e '0,/*/d' -e '/base volume/d' -e '/volume:/p' -e '/muted:/p' -e '/device\\.string/p'",
+local volume = lain.widget.pulsebar ({ cmd =  "pacmd list-sinks | sed -n -e '/* index: /p'  -e '0,/*/d' -e '/base volume/d' -e '/volume:/p' -e '/muted:/p' -e '/device\\.string/p'",
                                        shape            = gears.shape.rounded_bar,
                                        bar_shape        = gears.shape.rounded_bar,
                                      })
@@ -273,10 +273,10 @@ volume.bar:buttons(awful.util.table.join(
 ))
 
 -- Create a pulseaudio widget
-pulseaudio = wibox.container.background(
-   my_widgets.pulseaudio({ brd_color = beautiful.bg_normal,
-                           button_callback = function() end})
-   , beautiful.panel_tasklist)
+-- pulseaudio = wibox.container.background(
+--    my_widgets.pulseaudio({ brd_color = beautiful.bg_normal,
+--                            button_callback = function() end})
+--    , beautiful.panel_tasklist)
 
 -- END PULSEAUDIO --
 
@@ -322,71 +322,71 @@ mem.icon = wibox.widget {
 
 -- -- BEGIN OF AWESOMPD WIDGET DECLARATION
 
-local awesompd = require('my_widgets/awesompd/awesompd')
+-- local awesompd = require('my_widgets/awesompd/awesompd')
 
-musicwidget = awesompd:create() -- Create awesompd widget
-musicwidget.font = "Liberation Mono" -- Set widget font
--- musicwidget.font_color = "#FFFFFF" --Set widget font color
-musicwidget.background = "#313131" --Set widget background color
-musicwidget.scrolling = true -- If true, the text in the widget will be scrolled
-musicwidget.output_size = 30 -- Set the size of widget in symbols
-musicwidget.update_interval = 10 -- Set the update interval in seconds
+-- musicwidget = awesompd:create() -- Create awesompd widget
+-- musicwidget.font = "Liberation Mono" -- Set widget font
+-- -- musicwidget.font_color = "#FFFFFF" --Set widget font color
+-- musicwidget.background = "#313131" --Set widget background color
+-- musicwidget.scrolling = true -- If true, the text in the widget will be scrolled
+-- musicwidget.output_size = 30 -- Set the size of widget in symbols
+-- musicwidget.update_interval = 10 -- Set the update interval in seconds
 
 -- Set the folder where icons are located (change username to your login name)
-musicwidget.path_to_icons = "/home/mgordeev/.config/awesome/my_widgets/awesompd/icons"
+-- musicwidget.path_to_icons = "/home/mgordeev/.config/awesome/my_widgets/awesompd/icons"
 
 -- Set the path to the icon to be displayed on the widget itself
-musicwidget.widget_icon = beautiful.music_icon
+-- musicwidget.widget_icon = beautiful.music_icon
 
 -- Set the default music format for Jamendo streams. You can change
 -- this option on the fly in awesompd itself.
 -- possible formats: awesompd.FORMAT_MP3, awesompd.FORMAT_OGG
-musicwidget.jamendo_format = awesompd.FORMAT_MP3
+-- musicwidget.jamendo_format = awesompd.FORMAT_MP3
 
 -- Specify the browser you use so awesompd can open links from
 -- Jamendo in it.
-musicwidget.browser = browser
+-- musicwidget.browser = browser
 
 -- If true, song notifications for Jamendo tracks and local tracks
 -- will also contain album cover image.
-musicwidget.show_album_cover = true
+-- musicwidget.show_album_cover = true
 
 -- Specify how big in pixels should an album cover be. Maximum value
 -- is 100.
-musicwidget.album_cover_size = 50
+-- musicwidget.album_cover_size = 50
 
 -- This option is necessary if you want the album covers to be shown
 -- for your local tracks.
-musicwidget.mpd_config = awful.util.get_xdg_config_home() .. "mpd/mpd.conf"
+-- musicwidget.mpd_config = awful.util.get_xdg_config_home() .. "mpd/mpd.conf"
 
 -- Specify decorators on the left and the right side of the
 -- widget. Or just leave empty strings if you decorate the widget
 -- from outside.
-musicwidget.ldecorator = " "
-musicwidget.rdecorator = " "
+-- musicwidget.ldecorator = " "
+-- musicwidget.rdecorator = " "
 
 -- Set all the servers to work with (here can be any servers you use)
-musicwidget.servers = {
-   { server = "localhost",
-     port = 6600 }
-}
+-- musicwidget.servers = {
+--    { server = "localhost",
+--      port = 6600 }
+-- }
 
 -- Set the buttons of the widget. Keyboard keys are working in the
 -- entire Awesome environment. Also look at the line 352.
-musicwidget:register_buttons(
-   { { "", awesompd.MOUSE_LEFT, musicwidget:command_playpause() },
-     { "Control", awesompd.MOUSE_SCROLL_UP, musicwidget:command_prev_track() },
-     { "Control", awesompd.MOUSE_SCROLL_DOWN, musicwidget:command_next_track() },
-     { "", awesompd.MOUSE_SCROLL_UP, musicwidget:command_volume_up() },
-     { "", awesompd.MOUSE_SCROLL_DOWN, musicwidget:command_volume_down() },
-     { "", awesompd.MOUSE_RIGHT, musicwidget:command_show_menu() },
-     { "", "XF86AudioLowerVolume", musicwidget:command_volume_down() },
-     { "", "XF86AudioRaiseVolume", musicwidget:command_volume_up() },
-     { modkey, "Pause", musicwidget:command_playpause() } })
+-- musicwidget:register_buttons(
+--    { { "", awesompd.MOUSE_LEFT, musicwidget:command_playpause() },
+--      { "Control", awesompd.MOUSE_SCROLL_UP, musicwidget:command_prev_track() },
+--      { "Control", awesompd.MOUSE_SCROLL_DOWN, musicwidget:command_next_track() },
+--      { "", awesompd.MOUSE_SCROLL_UP, musicwidget:command_volume_up() },
+--      { "", awesompd.MOUSE_SCROLL_DOWN, musicwidget:command_volume_down() },
+--      { "", awesompd.MOUSE_RIGHT, musicwidget:command_show_menu() },
+--      { "", "XF86AudioLowerVolume", musicwidget:command_volume_down() },
+--      { "", "XF86AudioRaiseVolume", musicwidget:command_volume_up() },
+--      { modkey, "Pause", musicwidget:command_playpause() } })
 
-musicwidget:run() -- After all configuration is done, run the widget
+-- musicwidget:run() -- After all configuration is done, run the widget
 
-mpd =  wibox.container.background(musicwidget.widget, "#313131")
+-- mpd =  wibox.container.background(musicwidget.widget, "#313131")
 
 -- -- END OF AWESOMPD WIDGET DECLARATION
 

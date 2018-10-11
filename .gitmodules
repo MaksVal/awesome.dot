@@ -4,9 +4,6 @@
 [submodule "external/timoroes_awesome-config"]
 	path = external/timoroes_awesome-config
 	url = git@github.com:timroes/awesome-config.git
-[submodule "my_widgets/awesompd"]
-	path = my_widgets/awesompd
-	url = git@github.com:alexander-yakushev/awesompd.git
 [submodule "external/alfunx-awesome"]
 	path = external/alfunx-awesome
 	url = git@github.com:alfunx/.dotfiles.git
