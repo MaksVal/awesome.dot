@@ -183,7 +183,7 @@ globalkeys = gears.table.join(
    ),
    -- Take a screenshot
    awful.key({  			 }, "Print", function()
-                run_check("xfce4-screenshooter") end, -- "gnome-screenshot -c -a -f ~/Изображения/ScreenShot/$(date  +%y%h%d-%H%M%S).png"
+                run_check(screenshot) end, -- "gnome-screenshot -c -a -f ~/Изображения/ScreenShot/$(date  +%y%h%d-%H%M%S).png"
              {
                 description = "take a screenshot",
                 group = "launcher"
