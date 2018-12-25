@@ -245,7 +245,7 @@ keys.globalkeys = gears.table.join(
    ),
    -- Take a screenshot
    awful.key({  			 }, "Print", function()
-                run_check("xfce4-screenshooter") end, -- "gnome-screenshot -c -a -f ~/Изображения/ScreenShot/$(date  +%y%h%d-%H%M%S).png"
+                run_once(screenshooter) end, --xfce4-screenshooter"
              {
                 description = "take a screenshot",
                 group = "launcher"
@@ -382,7 +382,17 @@ keys.globalkeys = gears.table.join(
                 description = "Brightness small DOWN",
                 group = "Control of a screen"
              }
-   )
+   ),
+   -- Toggle tray visibility
+   awful.key({ superkey }, "=",
+      function ()
+         awful.screen.focused().traybox.visible = not awful.screen.focused().traybox.visible
+      end,
+      {
+         description = "toggle tray visibility",
+         group = "awesome"
+   })
+
    -- awful.key({}, 'XF86AudioRaiseVolume',
    --           function()
    --              pulseaudio:set_volume('+', 5)

@@ -319,21 +319,21 @@ local volume = wibox.widget{
 volume:buttons(gears.table.join(
                  -- Left click - Mute / Unmute
                  awful.button({ }, 1, function ()
-                     awful.spawn.with_shell("volume-control.sh toggle")
+                     awful.spawn.with_shell("~/bin/volume-control.sh toggle")
                  end),
                  -- Right click - Run or raise pavucontrol
-                 awful.button({ }, 3, function () 
+                 awful.button({ }, 3, function ()
                      local matcher = function (c)
                        return awful.rules.match(c, {class = 'Pavucontrol'})
                      end
                      awful.client.run_or_raise("pavucontrol", matcher)
                  end),
                  -- Scroll - Increase / Decrease volume
-                 awful.button({ }, 4, function () 
-                     awful.spawn.with_shell("volume-control.sh up")
+                 awful.button({ }, 4, function ()
+                     awful.spawn.with_shell("~/bin/volume-control.sh up")
                  end),
-                 awful.button({ }, 5, function () 
-                     awful.spawn.with_shell("volume-control.sh down")
+                 awful.button({ }, 5, function ()
+                     awful.spawn.with_shell("~/bin/volume-control.sh down")
                  end)
 ))
 

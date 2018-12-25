@@ -29,19 +29,19 @@ local ram_bar = wibox.widget{
 }
 
 local function update_widget(used_ram_percentage)
-  ram_bar.value = used_ram_percentage
+   ram_bar.value = tonumber(used_ram_percentage)
 end
 
-local used_ram_script = [[
-  bash -c "
+local used_ram_script =  [[
+  "bash -c
   free -m | grep 'Mem:' | awk '{printf \"%d@@%d@\", $7, $2}'
   "]]
 
 awful.widget.watch(used_ram_script, update_interval, function(widget, stdout)
-                     local available = stdout:match('(.*)@@')
-                     local total = stdout:match('@@(.*)@')
-                     local used_ram_percentage = (total - available) / total * 100
-                     update_widget(used_ram_percentage)
+                      local available = tonumber(stdout:match('(.*)@@'))
+                      local total = tonumber(stdout:match('@@(.*)@'))
+                      local used_ram_percentage = (total - available) / total * 100
+                      update_widget(used_ram_percentage)
 end)
 
 return ram_bar

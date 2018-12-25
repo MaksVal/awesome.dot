@@ -28,19 +28,27 @@ local temperature_bar = wibox.widget{
   widget        = wibox.widget.progressbar,
 }
 
-local function update_widget(temp)
-  temperature_bar.value = temp
+local function update_widget(temp_cur, temp_max)
+   temperature_bar.value = temp_cur
+   temperature_bar.max_value = temp_max
 end
+
+-- local temp_script = [[
+--   bash -c "
+--   sensors | grep Package | awk '{printf \"%d\", $4}' | cut -c 2-3
+--   "]]
 
 local temp_script = [[
   bash -c "
-  sensors | grep Package | awk '{print $4}' | cut -c 2-3
+  sensors | grep Package |sed 's/(\|)\|°C\|+\|,//g' | awk  '{printf \"%s@@%s@\", $7, $10}'
   "]]
 
 awful.widget.watch(temp_script, update_interval, function(widget, stdout)
-                     local temp = stdout
-                     temp = string.gsub(temp, '^%s*(.-)%s*$', '%1')
-                     update_widget(temp)
+                      local cur = tonumber(stdout:match('(.*)@@'))
+                      local max = tonumber(stdout:match('@@(.*)@'))
+                      -- temp = string.gsub(temp, '^%s*(.-)%s*$', '%1')
+                      -- temp = tonumber(string.match(".*"))
+                      update_widget(cur, max)
 end)
 
 return temperature_bar

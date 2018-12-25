@@ -145,7 +145,8 @@ music_prev		= "mpc prev || ncmpc prev || pms prev"
 music_next		= "mpc next || ncmpc next || pms next"
 filemanager		= "nautilus"
 cfilemanager	= terminal .. " -e ranger"
-editor = "emacsclient"
+
+screenshooter   = "gnome-screenshot -i"
 --editor = os.getenv("EDITOR") or "nano"
 -- filemanager = "nemo"
 

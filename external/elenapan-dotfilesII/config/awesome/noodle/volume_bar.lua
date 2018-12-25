@@ -33,23 +33,23 @@ local volume_bar = wibox.widget{
 }
 
 local function update_widget()
-  awful.spawn.easy_async({"sh", "-c", "pactl list sinks"},
-    function(stdout)
-      local volume = stdout:match('(%d+)%% /')
-      local muted = stdout:match('Mute:(%s+)[yes]')
-      local fill_color
-      local bg_color
-      if muted ~= nil then
-        fill_color = muted_color
-        bg_color = muted_background_color
-      else
-        fill_color = active_color
-        bg_color = active_background_color
-      end
-      volume_bar.value = volume
-      volume_bar.color = fill_color
-      volume_bar.background_color = bg_color
-    end
+  awful.spawn.easy_async({"sh", "-c", "pacmd list-sinks | grep -A63 '\\* index'"},
+     function(stdout)
+        local volume = tonumber(stdout:match('(%d+)%% /'))
+        local muted = stdout:match('Mute:(%s+)[yes]')
+        local fill_color
+        local bg_color
+        if muted ~= nil then
+           fill_color = muted_color
+           bg_color = muted_background_color
+        else
+           fill_color = active_color
+           bg_color = active_background_color
+        end
+        volume_bar.value = volume
+        volume_bar.color = fill_color
+        volume_bar.background_color = bg_color
+     end
   )
 end
 
@@ -63,7 +63,7 @@ update_widget()
 -- Sleeps until pactl detects an event (volume up/down/toggle mute)
 local volume_script = [[
   bash -c '
-  pactl subscribe 2> /dev/null | grep --line-buffered "sink #0"
+  LANG=en_US pactl subscribe 2> /dev/null | grep --line-buffered "sink #0"
   ']]
 
 awful.spawn.with_line_callback(volume_script, {

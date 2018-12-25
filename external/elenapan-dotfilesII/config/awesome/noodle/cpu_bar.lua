@@ -38,10 +38,10 @@ local cpu_idle_script = [[
   "]]
 
 awful.widget.watch(cpu_idle_script, update_interval, function(widget, stdout)
-                     -- local cpu_idle = stdout:match('+(.*)%.%d...(.*)%(')
-                     local cpu_idle = stdout
-                     cpu_idle = string.gsub(cpu_idle, '^%s*(.-)%s*$', '%1')
-                     update_widget(cpu_idle)
+                      -- local cpu_idle = stdout:match('+(.*)%.%d...(.*)%(')
+                      local cpu_idle = tonumber(string.match(stdout, "%d*"))
+                      -- cpu_idle = string.gsub(cpu_idle, '^%s*(.-)%s*$', '%1')
+                      update_widget(cpu_idle)
 end)
 
 return cpu_bar
