@@ -131,7 +131,7 @@ music_prev		= "mpc prev || ncmpc prev || pms prev"
 music_next		= "mpc next || ncmpc next || pms next"
 filemanager		= "nautilus"
 cfilemanager	= terminal .. " -e ranger"
-
+screenshot		= "xfce4-screenshooter"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,

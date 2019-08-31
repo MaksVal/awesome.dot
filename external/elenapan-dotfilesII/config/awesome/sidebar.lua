@@ -319,7 +319,7 @@ local volume = wibox.widget{
 volume:buttons(gears.table.join(
                  -- Left click - Mute / Unmute
                  awful.button({ }, 1, function ()
-                     awful.spawn.with_shell("~/bin/volume-control.sh toggle")
+                       awful.spawn.with_shell("~/bin/volume-control.sh toggle")
                  end),
                  -- Right click - Run or raise pavucontrol
                  awful.button({ }, 3, function ()
@@ -330,10 +330,10 @@ volume:buttons(gears.table.join(
                  end),
                  -- Scroll - Increase / Decrease volume
                  awful.button({ }, 4, function ()
-                     awful.spawn.with_shell("~/bin/volume-control.sh up")
+                       awful.spawn.with_shell("~/bin/volume-control.sh up")
                  end),
                  awful.button({ }, 5, function ()
-                     awful.spawn.with_shell("~/bin/volume-control.sh down")
+                       awful.spawn.with_shell("~/bin/volume-control.sh down")
                  end)
 ))
 
@@ -373,7 +373,7 @@ end
 if beautiful.sidebar_hide_on_mouse_leave then
   local sidebar_activator = wibox({y = 0, width = 1, height = awful.screen.focused().geometry.height, visible = true, ontop = false, opacity = 0, below = true})
   sidebar_activator:connect_signal("mouse::enter", function ()
-                                     sidebar.visible = true
+                                      sidebar.visible = true
   end)
 
   if beautiful.sidebar_position == "right" then

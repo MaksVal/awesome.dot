@@ -9,15 +9,39 @@
 --
 --------------------------------------------------------------------------------
 
+
 local theme_collection = {
     "manta",      -- 1 --
-    "lovelace"    -- 2 --
+    "lovelace",    -- 2 --
+    "ephemeral"	  -- 3 --
 }
 
 -- Change this number to use a different theme
-local theme_name = theme_collection[2]
+local theme_name = theme_collection[3]
 
 --------------------------------------------------------------------------------
+
+-- ===================================================================
+
+local bar_theme_collection = {
+    "manta",        -- 1 -- Taglist, client counter, date, time, layout
+    "lovelace",     -- 2 -- Start button, taglist, layout
+    "skyfall",      -- 3 -- Weather, taglist, window buttons, pop-up tray
+    "ephemeral",    -- 4 -- Taglist, start button, tasklist, and more buttons
+}
+
+-- Change this number to use a different bar theme
+local bar_theme_name = bar_theme_collection[4]
+-- ===================================================================
+local icon_theme_collection = {
+    "linebit",        -- 1 --
+    "drops",          -- 2 --
+}
+
+-- Change this number to use a different icon theme
+local icon_theme_name = icon_theme_collection[2]
+
+-- ===================================================================
 
 -- Jit
 --pcall(function() jit.on() end)
@@ -28,6 +52,9 @@ local beautiful = require("beautiful")
 local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/"
 beautiful.init( theme_dir .. theme_name .. "/theme.lua" )
 --beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+local xresources = require("beautiful.xresources")
+-- Make dpi function global
+dpi = xresources.apply_dpi
 
 -- Standard awesome library
 local gears = require("gears")
@@ -50,15 +77,6 @@ require("awful.hotkeys_popup.keys")
 -- As a result when awesome restarts, they keep running in background, along with the new ones that are created after the restart.
 -- This script cleans up the old processes.
 awful.spawn.with_shell("~/.config/awesome/awesome-cleanup.sh")
-
--- {{{ Initialize stuff
-local helpers = require("helpers")
-local bars = require("bars")
-local keys = require("keysII")
-local titlebars = require("titlebars")
-local sidebar = require("sidebar")
-local exit_screen = require("exit_screen")
--- }}}
 
 -- {{{ Third party
 -- }}}
@@ -86,6 +104,145 @@ do
         in_error = false
     end)
 end
+-- }}}
+
+-- Variable definitions
+-- ===================================================================
+-- User variables and preferences
+user = {
+    -- >> Default applications <<
+    terminal = "kitty -1",
+    floating_terminal = "kitty -1",
+    browser = "firefox",
+    file_manager = "nemo",
+    tmux = "kitty -1 -e tmux new",
+    editor = "kitty -1 --class editor -e vim",
+    -- editor = "emacs",
+
+    -- >> Search <<
+    -- web_search_cmd = "exo-open https://duckduckgo.com/?q="
+    web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
+    -- web_search_cmd = "exo-open https://www.google.com/search?q="
+
+    -- >> Music <<
+    music_client = "kitty -1 --class music -e ncmpcpp",
+
+    -- TODO
+    -- >> Screenshots <<
+    -- Make sure the directory exists!
+    screenshot_dir = os.getenv("HOME") .. "/Pictures/Screenshots/",
+
+    -- >> Email <<
+    email_client = "kitty -1 --class email -e neomutt",
+
+    -- >> Anti-aliasing <<
+    -- ------------------
+    -- Requires a compositor to be running.
+    -- ------------------
+    -- Currently this works if you set your titlebar position to "top", but it
+    -- is trivial to make it work for any titlebar position.
+    -- ------------------
+    -- This setting only affects clients, but you can "manually" apply
+    -- anti-aliasing to other wiboxes. Check out the notification
+    -- widget_template in notifications.lua for an example.
+    -- ------------------
+    -- If anti_aliasing is set to true, the top titlebar corners are
+    -- antialiased and a small titlebar is also added at the bottom in order to
+    -- round the bottom corners.
+    -- If anti_aliasing set to false, the client shape will STILL be rounded,
+    -- just without anti-aliasing, according to your theme's border_radius
+    -- variable.
+    -- ------------------
+    anti_aliasing = true,
+
+    -- >> Sidebar <<
+    sidebar_hide_on_mouse_leave = true,
+    sidebar_show_on_mouse_screen_edge = true,
+
+    -- >> Lock screen <<
+    -- You can set this to whatever you want or leave it empty in
+    -- order to unlock with just the Enter key.
+    lock_screen_password = "awesome",
+    -- lock_screen_password = "",
+
+    -- >> Weather <<
+    -- Get your key and find your city id at
+    -- https://openweathermap.org/
+    -- (You will need to make an account!)
+    openweathermap_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    openweathermap_city_id = "yyyyyy",
+    -- Use "metric" for Celcius, "imperial" for Fahrenheit
+    weather_units = "metric",
+}
+
+-- Features
+-- ===================================================================
+-- Basic
+-- ================
+-- Load icon theme
+icons = require("icons")
+icons.init(icon_theme_name)
+    print("! " .. "!!!")
+-- Helper functions
+-- What would I do without them?
+local helpers = require("helpers")
+-- Keybinds and mousebinds
+local keys = require("keys")
+-- Titlebars
+-- (most of the anti-aliasing magic happens here)
+require("titlebars")
+-- Notification settings
+require("notifications")
+
+-- Extras
+-- ==============
+-- Statusbar(s)
+require("bars."..bar_theme_name)
+
+-- Sidebar
+local sidebar = require("noodle.sidebar")
+
+-- Exit screen
+-- local exit_screen = require("noodle.exit_screen")
+local exit_screen = require("noodle.exit_screen_v2")
+
+-- Start screen
+-- Have not used/tested it in a long time.
+-- Some things might not work properly.
+-- local start_screen = require("noodle.start_screen")
+
+-- Lock screen
+-- Make sure to configure your password in the 'user' section above
+local lock_screen = require("noodle.lock_screen")
+
+-- App drawer
+local app_drawer = require("noodle.app_drawer")
+
+-- Daemons
+-- Most widgets that display system info depend on evil
+require("evil")
+
+-- ===================================================================
+-- ===================================================================
+
+-- Get screen geometry
+screen_width = awful.screen.focused().geometry.width
+screen_height = awful.screen.focused().geometry.height
+
+-- Load icon theme
+icons = require("icons")
+icons.init(icon_theme_name)
+
+-- {{{ Initialize stuff
+local helpers = require("helpers")
+local bars = require("bars." .. bar_theme_name)
+local keys = require("keysII")
+local titlebars = require("titlebars")
+local sidebar = require("noodle.sidebar")
+local exit_screen = require("exit_screen")
+-- Notification settings
+require("notifications")
+
 -- }}}
 
 function run_systemd(cmd)
@@ -126,7 +283,7 @@ end
 
 
 -- {{{ Variable definitions
-terminal 		= "gnome-terminal" or "xterm"
+terminal 		= "dbus-launch gnome-terminal" or "xterm"
 terminal_run 	= terminal .. " -e "
 tmux 			= terminal_run
 editor     		= os.getenv("EDITOR") or "emacsclient -c -a emacs" or "emacs" or "vim" or "vi" or "nano"
@@ -143,7 +300,7 @@ music_play		= "mpc toggle || ncmpc toggle || pms toggle"
 music_stop 		= "mpc stop || ncmpc stop || pms stop"
 music_prev		= "mpc prev || ncmpc prev || pms prev"
 music_next		= "mpc next || ncmpc next || pms next"
-filemanager		= "nautilus"
+filemanager		= "dbus-launch nautilus"
 cfilemanager	= terminal .. " -e ranger"
 
 screenshooter   = "gnome-screenshot -i"
@@ -174,57 +331,6 @@ awful.layout.layouts = {
     --awful.layout.suit.corner.sw,
     --awful.layout.suit.corner.se,
 }
--- }}}
-
--- {{{ Notifications
--- TODO: some options are not respected when the notification is created
--- through lib-notify. Naughty works as expected.
-
--- Icon size
-naughty.config.defaults['icon_size'] = beautiful.notification_icon_size
-
--- Timeouts
-naughty.config.defaults.timeout = 5
-naughty.config.presets.low.timeout = 2
-naughty.config.presets.critical.timeout = 12
-
--- Apply theme variables
-naughty.config.padding = beautiful.notification_padding
-naughty.config.spacing = beautiful.notification_spacing
-naughty.config.defaults.margin = beautiful.notification_margin
-naughty.config.defaults.border_width = beautiful.notification_border_width
-
-naughty.config.presets.normal = {
-    font         = beautiful.notification_font,
-    fg           = beautiful.notification_fg,
-    bg           = beautiful.notification_bg,
-    border_width = beautiful.notification_border_width,
-    margin       = beautiful.notification_margin,
-    position     = beautiful.notification_position
-}
-
-naughty.config.presets.low = {
-    font         = beautiful.notification_font,
-    fg           = beautiful.notification_fg,
-    bg           = beautiful.notification_bg,
-    border_width = beautiful.notification_border_width,
-    margin       = beautiful.notification_margin,
-    position     = beautiful.notification_position
-}
-
-naughty.config.presets.ok = naughty.config.presets.low
-naughty.config.presets.info = naughty.config.presets.low
-naughty.config.presets.warn = naughty.config.presets.normal
-
-naughty.config.presets.critical = {
-    font         = beautiful.notification_font,
-    fg           = beautiful.notification_crit_fg,
-    bg           = beautiful.notification_crit_bg,
-    border_width = beautiful.notification_border_width,
-    margin       = beautiful.notification_margin,
-    position     = beautiful.notification_position
-}
-
 -- }}}
 
 -- {{{ Menu
@@ -723,22 +829,33 @@ end)
 --    end
 --end)
 
--- Rounded corners
-if beautiful.border_radius ~= 0 then
-    client.connect_signal("manage", function (c, startup)
-        if not c.fullscreen then
-            c.shape = helpers.rrect(beautiful.border_radius)
-        end
-    end)
+-- Apply rounded corners to clients
+-- (If antialiasing is enabled, the rounded corners are applied in
+-- titlebars.lua)
+if not user.anti_aliasing then
+    if beautiful.border_radius ~= 0 then
+        client.connect_signal("manage", function (c, startup)
+            if not c.fullscreen and not c.maximized then
+                c.shape = helpers.rrect(beautiful.border_radius)
+            end
+        end)
 
-    -- Fullscreen clients should not have rounded corners
-    client.connect_signal("property::fullscreen", function (c)
-        if c.fullscreen then
-            c.shape = helpers.rect()
-        else
-            c.shape = helpers.rrect(beautiful.border_radius)
+        -- Fullscreen and maximized clients should not have rounded corners
+        local function no_round_corners (c)
+            if c.fullscreen or c.maximized then
+                c.shape = gears.shape.rectangle
+            else
+                c.shape = helpers.rrect(beautiful.border_radius)
+            end
         end
-    end)
+
+        client.connect_signal("property::fullscreen", no_round_corners)
+        client.connect_signal("property::maximized", no_round_corners)
+
+        beautiful.snap_shape = helpers.rrect(beautiful.border_radius * 2)
+    else
+        beautiful.snap_shape = gears.shape.rectangle
+    end
 end
 
 -- When a client starts up in fullscreen, resize it to cover the fullscreen a short moment later

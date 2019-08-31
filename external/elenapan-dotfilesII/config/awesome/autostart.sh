@@ -29,16 +29,18 @@ run mpd ~/.config/mpd/mpd.conf
 #mkfifo /tmp/mpv.fifo
 
 # For desktop effects
-run compton --config ~/.config/compton/compton.conf
+#run compton --config ~/.config/compton/compton.conf
 
 # Enable numlock on login
-run numlockx
+#run numlockx
 
+# Run xscreensaver
+run xscreensaver -nosplash
 # For battery notifications
 # run xfce4-power-manager
 
 # Network manager tray icon
-run nm-applet
+#run nm-applet
 
 # Keyboard
 #setxkbmap -layout "us,gr" -option "grp:alt_shift_toggle"
