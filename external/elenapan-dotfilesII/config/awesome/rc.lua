@@ -284,7 +284,7 @@ end
 
 -- {{{ Variable definitions
 terminal 		= "dbus-launch gnome-terminal" or "xterm"
-terminal_run 	= terminal .. " -e "
+terminal_run 	= terminal .. " -- "
 tmux 			= terminal_run
 editor     		= os.getenv("EDITOR") or "emacsclient -c -a emacs" or "emacs" or "vim" or "vi" or "nano"
 editor_cmd 		= terminal .. " -e " .. editor
@@ -301,7 +301,7 @@ music_stop 		= "mpc stop || ncmpc stop || pms stop"
 music_prev		= "mpc prev || ncmpc prev || pms prev"
 music_next		= "mpc next || ncmpc next || pms next"
 filemanager		= "dbus-launch nautilus"
-cfilemanager	= terminal .. " -e ranger"
+cfilemanager	= terminal_run .. "ranger"
 
 screenshooter   = "gnome-screenshot -i"
 --editor = os.getenv("EDITOR") or "nano"

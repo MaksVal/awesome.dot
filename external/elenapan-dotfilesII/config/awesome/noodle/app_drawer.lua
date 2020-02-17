@@ -85,7 +85,7 @@ local lutris_command = function ()
     helpers.run_or_raise({class = 'Lutris'}, false, "lutris", {switchtotag = true})
 end
 local youtube_command = function ()
-    awful.spawn.with_shell("~/scr/Rofi/rofi_mpvtube")
+    awful.spawn.with_shell("~/bin/rofi_mpvtube")
 end
 local networks_command = function ()
     awful.spawn.with_shell("~/bin/networks-rofi")
@@ -109,7 +109,7 @@ end
 -- I only use emacs for org mode :)
 -- (Remacs is a rewrite of emacs in Rust)
 local org_command = function ()
-    helpers.run_or_raise({class = 'Remacs'}, false, "remacs")
+    helpers.run_or_raise({class = 'emacs'}, false, "emacs")
 end
 
 -- Create app buttons
@@ -260,4 +260,3 @@ app_drawer:setup {
     -- bg = "#00000000",
     widget = wibox.container.background
 }
-

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+/#!/usr/bin/env bash
 # ---
 # Use "run program" to run it only if it is not already running
 # Use "program &" to run it regardless
@@ -7,7 +7,7 @@
 # TODO: run_once
 
 function run {
-    if ! pgrep $1 > /dev/null ;
+    if ! pgrep -f $1 > /dev/null ;
     then
         $@&
     fi
@@ -15,6 +15,7 @@ function run {
 
 # Music
 run mpd ~/.config/mpd/mpd.conf
+#run mopidy > ~/.cache/mopidy/mopidy.log 2>&1
 
 # Emacs daemon
 #run emacs --daemon
@@ -54,6 +55,13 @@ run xscreensaver -nosplash
 
 # Scratchpad
 #scratchpad
+
+# Gnome Services
+run /usr/lib/goa-daemon
+run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+eval $(gnome-keyring-daemon --components=pkcs11,secrets,ssh -r &)
+export SSH_AUTH_SOCK
+export GNOME_KEYRING_CONTROL
 
 # Update battery status and send signals
 CHARGING="$(udevadm info --path=/sys/class/power_supply/BAT0 | grep POWER_SUPPLY_STATUS | grep Charging)"

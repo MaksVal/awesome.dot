@@ -143,10 +143,10 @@ playerctl_toggle_icon:buttons(gears.table.join(
     end),
     awful.button({ }, 8, function ()
         sidebar.visible = false
-        awful.spawn.with_shell("~/scr/Rofi/rofi_mpvtube")
+        awful.spawn.with_shell("~/bin/rofi_mpvtube")
     end),
     awful.button({ }, 9, function ()
-        awful.spawn.with_shell("~/scr/info/mpv-query.sh")
+        awful.spawn.with_shell("~/bin/mpv-query.sh")
     end)
 ))
 
@@ -209,7 +209,7 @@ fancy_date.font = "sans italic 11"
 
 local fancy_time_widget = wibox.widget.textclock("%H%M")
 fancy_time_widget.markup = fancy_time_widget.text:sub(1,2) .. "<span foreground='" .. beautiful.xcolor12 .."'>" .. fancy_time_widget.text:sub(3,4) .. "</span>"
-fancy_time_widget:connect_signal("widget::redraw_needed", function () 
+fancy_time_widget:connect_signal("widget::redraw_needed", function ()
     fancy_time_widget.markup = fancy_time_widget.text:sub(1,2) .. "<span foreground='" .. beautiful.xcolor12 .."'>" .. fancy_time_widget.text:sub(3,4) .. "</span>"
 end)
 fancy_time_widget.align = "center"
