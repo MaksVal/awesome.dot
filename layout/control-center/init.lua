@@ -102,7 +102,7 @@ local main_control_row_two = wibox.widget {
 				layout = wibox.layout.align.vertical,
 				expand = 'none',
 				nil,
-				require('widget.dont-disturb'),
+				nill, --require('widget.dont-disturb'),
 				nil
 			}
 		),
@@ -256,7 +256,7 @@ local control_center = function(s)
 		width = s.geometry.width,
 		height = s.geometry.height
 	}
-	
+
 	local open_panel = function()
 		local focused = awful.screen.focused()
 		panel_visible = true
@@ -273,7 +273,7 @@ local control_center = function(s)
 
 		focused.control_center.visible = false
 		focused.backdrop_control_center.visible = false
-		
+
 		panel:emit_signal('closed')
 	end
 

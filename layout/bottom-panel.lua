@@ -14,17 +14,17 @@ local bottom_panel = function(s)
 		ontop = true,
 		screen = s,
 		type = 'dock',
-		height = dpi(48),
+		height = dpi(50),
 		width = s.geometry.width,
 		x = s.geometry.x,
-		y = s.geometry.height-55,
+		y = s.geometry.height-48,
 		stretch = true,
 		bg = beautiful.background,
 		fg = beautiful.fg_normal
 	}
 
 	panel:struts {
-		bottom = dpi(48)
+		bottom = dpi(50)
 	}
 
 	panel:connect_signal(
