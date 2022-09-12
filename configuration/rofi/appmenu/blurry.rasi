@@ -22,7 +22,7 @@ configuration {
     background:                     #00000000;
     background-alt:              	#00000000;
     background-bar:                 #f2f2f215;
-    foreground:                     #f2f2f2EE;
+    foreground:                     #009091EE;
     accent:			            	#3DAEE966;
 }
 
@@ -30,9 +30,9 @@ window {
     transparency:                   "real";
     background-color:               @background;
     text-color:                     @foreground;
-	border:							1px;
-	border-color:					@border;
-    border-radius:                  0px;
+	border:							0.1% 0.1% 0.1% 0.1%;
+	border-color:					#009091EE;
+    border-radius:                  20px;
 	width:							40%;
     location:                       center;
     x-offset:                       0;
