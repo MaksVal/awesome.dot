@@ -2,13 +2,11 @@ configuration {
 	font: "Inter Regular 10";
 	show-icons: true;
 	drun-display-format: "{name}";
-	fullscreen: false;
 	threads: 0;
 	matching: "fuzzy";
 	scroll-method: 0;
 	disable-history: false;
-	fullscreen: true;
-	window-thumbnail: true;
+    window-thumbnail: true;
 }
 
 * {
@@ -37,7 +35,7 @@ prompt {
 button {
 	action: "ok";
 	str: " ";
-	font: "FantasqueSansMono Nerd Font 11";
+	font: "Ubuntu Nerd Font Mono 11";
 	expand: false;
 	text-color: @foreground;
 	background-color: @transparent;

@@ -34,7 +34,7 @@ return {
       -- Default IDE
       development = '',
       -- Default network manager
-      network_manager = 'kitty iwctl',
+      network_manager = 'kitty --start-as maximized sleep && nmtui',
       -- Default bluetooth manager
       bluetooth_manager = 'blueman-manager',
       -- Default power manager
