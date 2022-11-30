@@ -266,7 +266,8 @@ ruled.client.connect_signal(
 					'VirtualBox Manage',
 					'VirtualBox Machine',
 					'Gnome-boxes',
-					'Virt-manager'
+					'Virt-manager',
+                    'FreeRDP_Windows10Corp'
 				}
 			},
 			properties = {
