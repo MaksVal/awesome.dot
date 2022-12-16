@@ -10,7 +10,7 @@ return {
 	social				= dir .. 'tag-list/' .. 'social.svg',
 	file_manager 		= dir .. 'tag-list/' .. 'file-manager.svg',
 	multimedia 			= dir .. 'tag-list/' .. 'multimedia.svg',
-	games 				= dir .. 'tag-list/' .. 'games.svg',
+	mails 				= dir .. 'tag-list/' .. 'mails.png',
 	development 		= dir .. 'tag-list/' .. 'development.svg',
 	sandbox 			= dir .. 'tag-list/' .. 'sandbox.svg',
 	terminal 			= dir .. 'tag-list/' .. 'terminal.svg',

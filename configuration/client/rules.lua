@@ -139,9 +139,9 @@ ruled.client.connect_signal(
 			},
 			properties = {
 				tag = '1',
-				switch_to_tags = true,
-				size_hints_honor = false,
-				titlebars_enabled = true
+                switch_to_tags = true,
+                size_hints_honor = false,
+                titlebars_enabled = true
 			}
 		}
 
@@ -163,6 +163,26 @@ ruled.client.connect_signal(
 			}
 		}
 
+       	-- IDEs and Tools
+		ruled.client.append_rule {
+			id = 'development',
+			rule_any = {
+				class = {
+					'Oomox',
+					'Unity',
+					'UnityHub',
+					'jetbrains-studio',
+					'Ettercap',
+					'scrcpy',
+                    'Emacs'
+				}
+			},
+			properties = {
+				tag = '3',
+				skip_decoration = true
+			}
+		}
+
 		-- Text editors and word processing
 		ruled.client.append_rule {
 			id = 'text',
@@ -171,8 +191,7 @@ ruled.client.connect_signal(
 					'Geany',
 					'Atom',
 					'Subl3',
-					'code-oss',
-                    'Emacs'
+					'code-oss'
 				},
 				name  = {
 					'LibreOffice',
@@ -180,7 +199,25 @@ ruled.client.connect_signal(
 				}
 			},
 			properties = {
-				tag = '3'
+				tag = '4'
+			}
+		}
+
+		-- Gaming
+		ruled.client.append_rule {
+			id = 'mails',
+			rule_any = {
+				class = {
+				},
+				name = {
+                   'thunderbird'
+                }
+			},
+			properties = {
+				tag = '5',
+				-- skip_decoration = true,
+				-- switch_to_tags = true,
+				placement = awful.placement.centered
 			}
 		}
 
@@ -201,7 +238,7 @@ ruled.client.connect_signal(
                 }
 			},
 			properties = {
-				tag = '4',
+				tag = '6',
 				switch_to_tags = true
 			}
 		}
@@ -212,32 +249,13 @@ ruled.client.connect_signal(
 			rule_any = {
 				class = {
 					'vlc',
-					'Spotify'
+					'Spotify',
+                    'ncmpcpp',
+                    'mpv'
 				}
 			},
 			properties = {
-				tag = '5',
-				switch_to_tags = true,
-				placement = awful.placement.centered
-			}
-		}
-
-		-- Gaming
-		ruled.client.append_rule {
-			id = 'gaming',
-			rule_any = {
-				class = {
-					'Wine',
-					'dolphin-emu',
-					'Steam',
-					'Citra',
-					'supertuxkart'
-				},
-				name = {'Steam'}
-			},
-			properties = {
-				tag = '6',
-				skip_decoration = true,
+				tag = '7',
 				switch_to_tags = true,
 				placement = awful.placement.centered
 			}
@@ -254,7 +272,7 @@ ruled.client.connect_signal(
 				}
 			},
 			properties = {
-				tag = '7'
+				tag = '8'
 			}
 		}
 
@@ -271,26 +289,7 @@ ruled.client.connect_signal(
 				}
 			},
 			properties = {
-				tag = '8'
-			}
-		}
-
-		-- IDEs and Tools
-		ruled.client.append_rule {
-			id = 'development',
-			rule_any = {
-				class = {
-					'Oomox',
-					'Unity',
-					'UnityHub',
-					'jetbrains-studio',
-					'Ettercap',
-					'scrcpy'
-				}
-			},
-			properties = {
-				tag = '9',
-				skip_decoration = true
+				tag = '9'
 			}
 		}
 

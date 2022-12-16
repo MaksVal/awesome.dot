@@ -168,9 +168,9 @@ local global_keys = awful.util.table.join(
 		{modkey, 'Shift'},
 		'F2',
 		function()
-			awful.screen.focus_relative(1)
+           awful.spawn(apps.default.musicplayer)
 		end,
-		{ description = 'focus the next screen', group = 'screen'}
+		{ description = 'open default music player', group = 'hotkeys'}
 	),
 	awful.key(
 		{modkey, 'Control'},

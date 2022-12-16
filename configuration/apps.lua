@@ -25,14 +25,16 @@ return {
       file_manager_console = 'kitty --name ranger --class ranger ranger',             -- Console File manager
       -- Default media player
       multimedia = 'mpv',
+      -- Default media player
+      musicplayer = 'kitty --name ncmpcpp --class ncmpcpp ncmpcpp',
       -- Default game, can be a launcher like steam
-      game = 'supertuxkart',
+      mail_client = 'thunderbird',
       -- Default graphics editor
       graphics = 'gimp-2.10',
       -- Default sandbox
       sandbox = 'virtualbox',
       -- Default IDE
-      development = '',
+      development = 'emacsclient',
       -- Default network manager
       network_manager = 'kitty --start-as maximized sleep && nmtui',
       -- Default bluetooth manager
@@ -74,16 +76,16 @@ return {
       -- Load X colors
       'xrdb $HOME/.Xresources',
       -- Audio equalizer
-      'pulseeffects --gapplication-service',
+      -- 'pulseeffects --gapplication-service',
       -- Lockscreen timer
-      [[
-		xidlehook --not-when-fullscreen --not-when-audio --timer 600 \
-		"awesome-client 'awesome.emit_signal(\"module::lockscreen_show\")'" ""
-		]],
+      -- [[
+	  --   xidlehook --not-when-fullscreen --not-when-audio --timer 600 \
+	  --   "awesome-client 'awesome.emit_signal(\"module::lockscreen_show\")'" ""
+	  --   ]],
 
-		-- You can add more start-up applications here
-        'pulseaudio -vvvv --log-time=1 > $HOME/.cache/pulseverbose.log 2>&1',
-        '/usr/lib/gsd-xsettings > $HOME/.cache/gnome-settings.log 2>&1'
+      -- You can add more start-up applications here
+      'pulseaudio -vvvv --log-time=1 > $HOME/.cache/pulseverbose.log 2>&1',
+      '/usr/lib/gsd-xsettings > $HOME/.cache/gnome-settings.log 2>&1'
    },
 
    -- List of binaries/shell scripts that will execute for a certain task
