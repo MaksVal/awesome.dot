@@ -69,7 +69,7 @@ local update_slider_value = function()
 
 	awful.spawn.easy_async_with_shell(
 		[[bash -c "
-		grep -F 'strength =' $HOME/.config/awesome/configuration/picom.conf | 
+		grep -F 'strength =' $HOME/.config/awesome/configuration/picom.conf |
 		awk 'NR==1 {print $3}' | tr -d ';'
 		"]],
 		function(stdout, stderr)
@@ -114,10 +114,9 @@ action_level:buttons(
 )
 
 local adjust_blur = function(power)
-
 	awful.spawn.with_shell(
 		[[bash -c "
-		sed -i 's/.*strength = .*/    strength = ]] .. power .. [[;/g' \
+		sed -i 's/.*strength = .*/    strength = ]] .. math.floor(power) .. [[;/g' \
 		$HOME/.config/awesome/configuration/picom.conf
 		"]]
 	)
@@ -136,13 +135,13 @@ blur_slider:connect_signal(
 -- Adjust slider value to change blur strength
 awesome.connect_signal(
 	'widget::blur:increase',
-	function() 
+	function()
 
 		-- On startup, the slider.value returns nil so...
 		if blur_slider:get_value() == nil then
 			return
 		end
-	 
+
 		local blur_value = blur_slider:get_value() + 10
 
 		-- No more than 100!
@@ -158,8 +157,8 @@ awesome.connect_signal(
 -- Decrease blur
 awesome.connect_signal(
 	'widget::blur:decrease',
-	function() 
-	
+	function()
+
 		-- On startup, the slider.value returns nil so...
 		if blur_slider:get_value() == nil then
 			return

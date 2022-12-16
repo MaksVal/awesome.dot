@@ -73,7 +73,7 @@ local check_blur_status = function()
 	awful.spawn.easy_async_with_shell(
 		[[bash -c "
 		grep -F 'method = \"none\";' ]] .. config_dir .. [[/configuration/picom.conf | tr -d '[\"\;\=\ ]'
-		"]], 
+		"]],
 		function(stdout, stderr)
 			if stdout:match('methodnone') then
 				blur_status = false
@@ -92,15 +92,15 @@ local toggle_blur = function(togglemode)
 	local toggle_blur_script = [[bash -c "
 	# Check picom if it's not running then start it
 	if [ -z $(pgrep picom) ]; then
-		picom -b --experimental-backends --dbus --config ]] .. config_dir .. [[configuration/picom.conf
+		picom -b --dbus --config ]] .. config_dir .. [[configuration/picom.conf
 	fi
 
 	case ]] .. togglemode .. [[ in
 		'enable')
-		sed -i -e 's/method = \"none\"/method = \"dual_kawase\"/g' \"]] .. config_dir .. [[configuration/picom.conf\"
+		sed -i -e 's/method = \"none\"/method = \"gaussian\"/g' \"]] .. config_dir .. [[configuration/picom.conf\"
 		;;
 		'disable')
-		sed -i -e 's/method = \"dual_kawase\"/method = \"none\"/g' \"]] .. config_dir .. [[configuration/picom.conf\"
+		sed -i -e 's/method = \"gaussian\"/method = \"none\"/g' \"]] .. config_dir .. [[configuration/picom.conf\"
 		;;
 	esac
 	"]]
@@ -148,7 +148,7 @@ action_info:buttons(
 )
 
 local action_widget =  wibox.widget {
-	layout = wibox.layout.fixed.horizontal,	
+	layout = wibox.layout.fixed.horizontal,
 	spacing = dpi(10),
 	widget_button,
 	{
@@ -161,8 +161,8 @@ local action_widget =  wibox.widget {
 }
 
 awesome.connect_signal(
-	'widget::blur:toggle', 
-	function() 
+	'widget::blur:toggle',
+	function()
 		toggle_blur_fx()
 	end
 )

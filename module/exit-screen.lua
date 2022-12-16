@@ -99,8 +99,8 @@ local update_user_name = function()
 		fi
 		]],
 		function(stdout)
-			stdout = stdout:gsub('%\n','')
-			local first_name = stdout:match('(.*)@') or stdout:match('(.-)%s')
+            stdout = stdout:gsub('%\n','')
+			local first_name = stdout:match('(.*)@') or stdout:match('(.-)%s') or stdout
 			first_name = first_name:sub(1, 1):upper() .. first_name:sub(2)
 			profile_name:set_markup(stdout)
 			profile_name:emit_signal('widget::redraw_needed')
@@ -315,7 +315,7 @@ screen.connect_signal(
 local exit_screen_grabber = awful.keygrabber {
 	auto_start = true,
 	stop_event = 'release',
-	keypressed_callback = function(self, mod, key, command) 
+	keypressed_callback = function(self, mod, key, command)
 		if key == 's' then
 			suspend_command()
 
@@ -339,7 +339,7 @@ local exit_screen_grabber = awful.keygrabber {
 
 awesome.connect_signal(
 	'module::exit_screen:show',
-	function() 
+	function()
 		for s in screen do
 			s.exit_screen.visible = false
 		end
