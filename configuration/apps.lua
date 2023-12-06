@@ -36,13 +36,13 @@ return {
       -- Default IDE
       development = 'emacsclient',
       -- Default network manager
-      network_manager = 'kitty --start-as maximized sleep && nmtui',
+      network_manager = 'nm-connection-editor',
       -- Default bluetooth manager
       bluetooth_manager = 'blueman-manager',
       -- Default power manager
       power_manager = 'xfce4-power-manager',
       -- Default GUI package manager
-      package_manager = 'pamac-manager',
+      package_manager = 'aptitude',
       -- Default locker
       lock = 'awesome-client "awesome.emit_signal(\'module::lockscreen_show\')"',
       -- Default quake terminal
@@ -69,10 +69,9 @@ return {
       -- Blueman applet
       -- 'blueman-applet',
       -- Music server
-      'mpd',
+      'pkill mpd && mpd',
       -- Polkit and keyring
-      '/usr/bin/lxqt-policykit-agent &' ..
-         ' eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)',
+      'eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)',
       -- Load X colors
       'xrdb $HOME/.Xresources',
       -- Audio equalizer
@@ -85,7 +84,14 @@ return {
 
       -- You can add more start-up applications here
       'pulseaudio -vvvv --log-time=1 > $HOME/.cache/pulseverbose.log 2>&1',
-      '/usr/lib/gsd-xsettings > $HOME/.cache/gnome-settings.log 2>&1'
+      '/usr/lib/gsd-xsettings > $HOME/.cache/gnome-settings.log 2>&1',
+
+      -- For Galaxy Buds 2 HSP
+      'ofono-phonesim -p 12345 /usr/share/phonesim/default.xml',
+      'ibus-daemon -rxRd',
+      '/usr/libexec/xdg-desktop-portal-gtk',
+      '/usr/libexec/xdg-desktop-portal',
+      '/usr/libexec/xdg-permission-store'
    },
 
    -- List of binaries/shell scripts that will execute for a certain task

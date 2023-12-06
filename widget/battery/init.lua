@@ -95,7 +95,7 @@ local return_button = function()
 
 	battery_widget:connect_signal(
 		'mouse::enter',
-		function() 
+		function()
 			get_battery_info()
 		end
 	)
@@ -133,12 +133,7 @@ local return_button = function()
 
 				local icon_name = 'battery'
 
-				-- Fully charged
-				if (status == 'fully-charged' or status == 'charging') and battery_percentage == 100 then
-					icon_name = icon_name .. '-' .. 'fully-charged'
-					battery_imagebox.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. icon_name .. '.svg'))
-					return
-				end
+
 
 				-- Critical level warning message
 				if (battery_percentage > 0 and battery_percentage < 10) and status == 'discharging' then
@@ -155,7 +150,7 @@ local return_button = function()
 
 				-- Discharging
 				if battery_percentage > 0 and battery_percentage < 20 then
-					icon_name = icon_name .. '-' .. status .. '-' .. '10'
+					icon_name = icon_name .. '-' .. 'alert'
 
 				elseif battery_percentage >= 20 and battery_percentage < 30 then
 					icon_name = icon_name .. '-' .. status .. '-' .. '20'
@@ -173,7 +168,8 @@ local return_button = function()
 					icon_name = icon_name .. '-' .. status .. '-' .. '80'
 
 				elseif battery_percentage >= 90 and battery_percentage < 100 then
-					icon_name = icon_name .. '-' .. status .. '-' .. '90'
+                   -- Fully charged
+                   icon_name = icon_name .. '-' .. status
 				end
 
 				battery_imagebox.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. icon_name .. '.svg'))
@@ -189,7 +185,7 @@ local return_button = function()
 		5,
 		function(widget, stdout)
 			local status = stdout:gsub('%\n', '')
-			
+
 			-- If no output or no battery detected
 			if status == nil or status == '' then
 				battery_widget.spacing = dpi(0)

@@ -12,7 +12,7 @@
 local awful = require('awful')
 local wibox = require('wibox')
 local gears = require('gears')
-local naughty = require('naughty') 
+local naughty = require('naughty')
 local dpi = require('beautiful').xresources.apply_dpi
 local apps = require('configuration.apps')
 local clickable_container = require('widget.clickable-container')
@@ -56,7 +56,7 @@ local return_button = function()
 		},
 		widget = clickable_container
 	}
-	
+
 	widget_button:buttons(
 		gears.table.join(
 			awful.button(
@@ -64,7 +64,7 @@ local return_button = function()
 				1,
 				nil,
 				function()
-					awful.spawn(apps.default.network_manager, false)
+                   awful.spawn(apps.default.network_manager, false)
 				end
 			)
 		)
@@ -115,7 +115,7 @@ local return_button = function()
 	end
 
 	local network_notify = function(message, title, app_name, icon)
-		naughty.notification({ 
+		naughty.notification({
 			message = message,
 			title = title,
 			app_name = app_name,
@@ -150,7 +150,7 @@ local return_button = function()
 						'</b>\nWireless Interface: <b>' .. interfaces.wlan_interface ..
 						'</b>\nWiFi-Strength: <b>' .. tostring(wifi_strength) .. '%' ..
 						'</b>\nBit rate: <b>' .. tostring(bitrate) .. '</b>'
-					
+
 					if healthy then
 						update_tooltip(message)
 					else
@@ -185,7 +185,7 @@ local return_button = function()
 				end
 			)
 		end
-		
+
 		-- Get wifi strength
 		local update_wireless_strength = function()
 			awful.spawn.easy_async_with_shell(
@@ -224,7 +224,7 @@ local return_button = function()
 			function(stdout)
 
 				local widget_icon_name = 'wired'
-				
+
 				if stdout:match('Connected but no internet') then
 					widget_icon_name = widget_icon_name .. '-alert'
 					update_tooltip(
@@ -283,73 +283,59 @@ local return_button = function()
 	end
 
 	local check_network_mode = function()
-		awful.spawn.easy_async_with_shell(
-			[=[
-			wireless="]=] .. tostring(interfaces.wlan_interface) .. [=["
-			wired="]=] .. tostring(interfaces.lan_interface) .. [=["
-			net="/sys/class/net/"
+       local type_network_cmd = [=[
+       wireless="wlan0"
+       wired="enp"
+       net="/sys/class/net/"
 
-			wired_state="down"
-			wireless_state="down"
-			network_mode=""
+       wireless_state="down"
+       wired_state="down"
+       network_mode=""
 
-			# Check network state based on interface's operstate value
-			function check_network_state() {
-				# Check what interface is up
-				if [[ "${wireless_state}" == "up" ]];
-				then
-					network_mode='wireless'
-				elif [[ "${wired_state}" == "up" ]];
-				then
-					network_mode='wired'
-				else
-					network_mode='No internet connection'
-				fi
-			}
+       if test -n "${wireless}" && test -d "${net}${wireless}";
+       then
+          wireless_state="$(cat "${net}${wireless}/operstate")"
+       fi
+       if test -n "${wired}" && test -d "${net}${wired}"; then
+          wired_state="$(cat "${net}${wired}/operstate")"
+       fi
 
-			# Check if network directory exist
-			function check_network_directory() {
-				if [[ -n "${wireless}" && -d "${net}${wireless}" ]];
-				then
-					wireless_state="$(cat "${net}${wireless}/operstate")"
-				fi
-				if [[ -n "${wired}" && -d "${net}${wired}" ]]; then
-					wired_state="$(cat "${net}${wired}/operstate")"
-				fi
-				check_network_state
-			}
+       # Check what interface is up
+       if test "${wireless_state}" = "up"; then
+          network_mode='wireless'
+       elif test "${wired_state}" = "up"; then
+          network_mode='wired'
+       else
+          network_mode='No internet connection'
+       fi
 
-			# Start script
-			function print_network_mode() {
-				# Call to check network dir
-				check_network_directory
-				# Print network mode
-				printf "${network_mode}"
-			}
+       # Print network mode
+       printf "${network_mode}"
 
-			print_network_mode
+       ]=]
 
-			]=],
-			function(stdout)
-				local mode = stdout:gsub('%\n', '')
-				if stdout:match('No internet connection') then
-					update_disconnected()
-				elseif stdout:match('wireless') then
-					update_wireless()
-				elseif stdout:match('wired') then
-					update_wired()
-				end
-			end
-		)
+       awful.spawn.easy_async_with_shell(
+          type_network_cmd,
+          function(stdout)
+             local mode = stdout:gsub('%\n', '')
+             if stdout:match('No internet connection') then
+                update_disconnected()
+             elseif stdout:match('wireless') then
+                update_wireless()
+             elseif stdout:match('wired') then
+                update_wired()
+             end
+          end
+       )
 	end
 
 	local network_updater = gears.timer {
-		timeout = 5,
-		autostart = true,
-		call_now = true,
-		callback = function()
-			check_network_mode()
-		end	
+       timeout = 5,
+       autostart = true,
+       call_now = true,
+       callback = function()
+          check_network_mode()
+       end
 	}
 
 	return widget_button

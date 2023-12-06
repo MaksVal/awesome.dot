@@ -68,7 +68,7 @@ ruled.client.connect_signal(
 			id = 'dialog',
 			rule_any = {
 				type  = {'dialog'},
-				class = {'Wicd-client.py', 'calendar.google.com'}
+				class = {'Wicd-client.py', 'calendar.google.com', 'Gcr-prompter'}
 			},
 			properties = {
 				titlebars_enabled = true,
