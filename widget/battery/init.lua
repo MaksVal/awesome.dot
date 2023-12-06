@@ -169,7 +169,7 @@ local return_button = function()
 
 				elseif battery_percentage >= 90 and battery_percentage < 100 then
                    -- Fully charged
-                   icon_name = icon_name .. '-' .. status
+                   icon_name = icon_name
 				end
 
 				battery_imagebox.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. icon_name .. '.svg'))

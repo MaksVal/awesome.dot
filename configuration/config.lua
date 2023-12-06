@@ -63,10 +63,10 @@ return {
 			valid_picture_formats = {'jpg', 'png', 'jpeg'},
 			-- Leave this table empty for full auto scheduling
 			wallpaper_schedule = {
-				['00:00:00'] = 'midnight-wallpaper.jpg',
-				['06:22:00'] = 'morning-wallpaper.jpg',
-				['12:00:00'] = 'noon-wallpaper.jpg',
-				['17:58:00'] = 'night-wallpaper.jpg'
+				['00:00:00'] = 'wallhaven-1poo61.jpg',
+				['06:22:00'] = 'wallhaven-x1pv1v.png',
+				['12:00:00'] = 'noon-wallhaven-jxd1x5.jpg',
+				['17:58:00'] = 'night-wallhaven-jxlwpm.jpg'
 				-- Example of just using auto-scheduling with keywords
 				--[[
 					'midnight',
