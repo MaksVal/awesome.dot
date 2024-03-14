@@ -6,6 +6,7 @@ local dpi = beautiful.xresources.apply_dpi
 local clickable_container = require('widget.clickable-container')
 local config = require('configuration.config')
 local military_mode = config.widget.clock.military_mode or false
+local start_sunday_mode = config.widget.clock.start_sunday_mode or false
 
 local create_clock = function(s)
 
@@ -103,7 +104,7 @@ local create_clock = function(s)
 	)
 	
 	s.month_calendar      = awful.widget.calendar_popup.month({
-		start_sunday      = true,
+		start_sunday      = start_sunday_mode,
 		spacing           = dpi(5),
 		font              = 'Inter Regular 10',
 		long_weekdays     = true,

@@ -30,8 +30,9 @@ return {
 		},
 
 		clock = {
-			-- Clock widget format
-			military_mode = false
+           -- Clock widget format
+           military_mode = false,
+           start_sunday_mode = false
 		},
 
 		screen_recorder = {

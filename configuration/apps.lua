@@ -68,8 +68,6 @@ return {
          config_dir .. '/configuration/picom.conf',
       -- Blueman applet
       -- 'blueman-applet',
-      -- Music server
-      'pkill mpd && mpd',
       -- Polkit and keyring
       'eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)',
       -- Load X colors
