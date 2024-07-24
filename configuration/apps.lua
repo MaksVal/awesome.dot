@@ -44,7 +44,7 @@ return {
       -- Default GUI package manager
       package_manager = 'aptitude',
       -- Default locker
-      lock = 'awesome-client "awesome.emit_signal(\'module::lockscreen_show\')"',
+      lock = 'dm-tool switch-to-greeter',
       -- Default quake terminal
       quake = 'kitty --name QuakeTerminal',
       -- Default rofi global menu
@@ -83,6 +83,7 @@ return {
       -- You can add more start-up applications here
       'pulseaudio -vvvv --log-time=1 > $HOME/.cache/pulseverbose.log 2>&1',
       '/usr/lib/gsd-xsettings > $HOME/.cache/gnome-settings.log 2>&1',
+      '/usr/lib/gsd-disk-utility-notify > $HOME/.cache/gnome-settings.log 2>&1',
 
       -- For Galaxy Buds 2 HSP
       'ofono-phonesim -p 12345 /usr/share/phonesim/default.xml',
