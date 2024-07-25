@@ -81,9 +81,9 @@ return {
 	  --   ]],
 
       -- You can add more start-up applications here
-      'pulseaudio -vvvv --log-time=1 > $HOME/.cache/pulseverbose.log 2>&1',
-      '/usr/lib/gsd-xsettings > $HOME/.cache/gnome-settings.log 2>&1',
-      '/usr/lib/gsd-disk-utility-notify > $HOME/.cache/gnome-settings.log 2>&1',
+      'pulseaudio --start',
+      '/usr/lib/gsd-xsettings',
+      '/usr/lib/gsd-disk-utility-notify',
 
       -- For Galaxy Buds 2 HSP
       'ofono-phonesim -p 12345 /usr/share/phonesim/default.xml',

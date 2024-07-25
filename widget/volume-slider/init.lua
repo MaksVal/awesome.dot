@@ -69,18 +69,24 @@ local volume_slider = slider.volume_slider
 volume_slider:connect_signal(
 	'property::value',
 	function()
-		local volume_level = volume_slider:get_value()
-		
-		spawn('amixer -D pulse sset Master ' .. 
-			volume_level .. '%',
-			false
-		)
+       awful.spawn.easy_async_with_shell(
+          "pamixer --get-volume-human",
+          function(stdout)
+             local volume
+             if string.find(stdout, "muted") then
+                volume = 0
+             else
+                volume = string.match(stdout, '(%d?%d?%d?)%%')
+             end
 
-		-- Update volume osd
-		awesome.emit_signal(
-			'module::volume_osd',
-			volume_level
-		)
+             volume_slider:set_value(tonumber(volume))
+       end)
+
+       -- Update volume osd
+       awesome.emit_signal(
+          'module::volume_osd',
+          volume_slider:get_value()
+       )
 	end
 )
 
@@ -115,13 +121,18 @@ volume_slider:buttons(
 
 
 local update_slider = function()
-	awful.spawn.easy_async_with_shell(
-		[[bash -c "amixer -D pulse sget Master"]],
-		function(stdout)
-			local volume = string.match(stdout, '(%d?%d?%d)%%')
-			volume_slider:set_value(tonumber(volume))
-		end
-	)
+   awful.spawn.easy_async_with_shell(
+      "pamixer --get-volume-human",
+      function(stdout)
+         local volume
+         if string.find(stdout, "muted") then
+            volume = 0
+         else
+            volume = string.match(stdout, '(%d?%d?%d?)%%')
+         end
+
+         volume_slider:set_value(tonumber(volume))
+   end)
 end
 
 -- Update on startup

@@ -26,211 +26,213 @@ local global_keys = awful.util.table.join(
 	),
 
 	awful.key({modkey, 'Control'},
-		'q',
-		awesome.quit,
-		{description = 'quit awesome', group = 'awesome'}
+       'q',
+       awesome.quit,
+       {description = 'quit awesome', group = 'awesome'}
 	),
 	awful.key(
-		{altkey, 'Shift'},
-		'l',
-		function()
-			awful.tag.incmwfact(0.05)
-		end,
-		{description = 'increase master width factor', group = 'layout'}
+       {altkey, 'Shift'},
+       'l',
+       function()
+          awful.tag.incmwfact(0.05)
+       end,
+       {description = 'increase master width factor', group = 'layout'}
 	),
 	awful.key(
-		{altkey, 'Shift'},
-		'h',
-		function()
-			awful.tag.incmwfact(-0.05)
-		end,
-		{description = 'decrease master width factor', group = 'layout'}
+       {altkey, 'Shift'},
+       'h',
+       function()
+          awful.tag.incmwfact(-0.05)
+       end,
+       {description = 'decrease master width factor', group = 'layout'}
 	),
 	awful.key(
-		{modkey, 'Shift'},
-		'h',
-		function()
-			awful.tag.incnmaster(1, nil, true)
-		end,
-		{description = 'increase the number of master clients', group = 'layout'}
+       {modkey, 'Shift'},
+       'h',
+       function()
+          awful.tag.incnmaster(1, nil, true)
+       end,
+       {description = 'increase the number of master clients', group = 'layout'}
 	),
 	awful.key(
-		{modkey, 'Shift'},
-		'l',
-		function()
-			awful.tag.incnmaster(-1, nil, true)
-		end,
-		{description = 'decrease the number of master clients', group = 'layout'}
+       {modkey, 'Shift'},
+       'l',
+       function()
+          awful.tag.incnmaster(-1, nil, true)
+       end,
+       {description = 'decrease the number of master clients', group = 'layout'}
 	),
 	awful.key(
-		{modkey, 'Control'},
-		'h',
-		function()
-			awful.tag.incncol(1, nil, true)
-		end,
-		{description = 'increase the number of columns', group = 'layout'}
+       {modkey, 'Control'},
+       'h',
+       function()
+          awful.tag.incncol(1, nil, true)
+       end,
+       {description = 'increase the number of columns', group = 'layout'}
 	),
 	awful.key(
-		{modkey, 'Control'},
-		'l',
-		function()
-			awful.tag.incncol(-1, nil, true)
-		end,
-		{description = 'decrease the number of columns', group = 'layout'}
+       {modkey, 'Control'},
+       'l',
+       function()
+          awful.tag.incncol(-1, nil, true)
+       end,
+       {description = 'decrease the number of columns', group = 'layout'}
 	),
 	awful.key(
-		{modkey},
-		'space',
-		function()
-			awful.layout.inc(1)
-		end,
-		{description = 'select next layout', group = 'layout'}
+       {modkey},
+       'space',
+       function()
+          awful.layout.inc(1)
+       end,
+       {description = 'select next layout', group = 'layout'}
 	),
 	awful.key(
-		{modkey, 'Shift'},
-		'space',
-		function()
-			awful.layout.inc(-1)
-		end,
-		{description = 'select previous layout', group = 'layout'}
+       {modkey, 'Shift'},
+       'space',
+       function()
+          awful.layout.inc(-1)
+       end,
+       {description = 'select previous layout', group = 'layout'}
 	),
 	awful.key(
-		{modkey},
-		'o',
-		function()
-			awful.tag.incgap(1)
-		end,
-		{description = 'increase gap', group = 'layout'}
+       {modkey},
+       'o',
+       function()
+          awful.tag.incgap(1)
+       end,
+       {description = 'increase gap', group = 'layout'}
 	),
 	awful.key(
-		{modkey, 'Shift'},
-		'o',
-		function()
-			awful.tag.incgap(-1)
-		end,
-		{description = 'decrease gap', group = 'layout'}
+       {modkey, 'Shift'},
+       'o',
+       function()
+          awful.tag.incgap(-1)
+       end,
+       {description = 'decrease gap', group = 'layout'}
 	),
 	awful.key(
-		{modkey},
-		'w',
-		awful.tag.viewprev,
-		{description = 'view previous tag', group = 'tag'}
+       {modkey},
+       'w',
+       awful.tag.viewprev,
+       {description = 'view previous tag', group = 'tag'}
 	),
 	awful.key(
-		{modkey},
-		's',
-		awful.tag.viewnext,
-		{description = 'view next tag', group = 'tag'}
+       {modkey},
+       's',
+       awful.tag.viewnext,
+       {description = 'view next tag', group = 'tag'}
 	),
 	awful.key(
-		{modkey},
-		'Escape',
-		awful.tag.history.restore,
-		{description = 'alternate between current and previous tag', group = 'tag'}
+       {modkey},
+       'Escape',
+       awful.tag.history.restore,
+       {description = 'alternate between current and previous tag', group = 'tag'}
 	),
 	awful.key({ modkey, 'Control' },
-		'w',
-		function ()
-			-- tag_view_nonempty(-1)
-			local focused = awful.screen.focused()
-			for i = 1, #focused.tags do
-				awful.tag.viewidx(-1, focused)
-				if #focused.clients > 0 then
-					return
-				end
-			end
-		end,
-		{description = 'view previous non-empty tag', group = 'tag'}
+       'w',
+       function ()
+          -- tag_view_nonempty(-1)
+          local focused = awful.screen.focused()
+          for i = 1, #focused.tags do
+             awful.tag.viewidx(-1, focused)
+             if #focused.clients > 0 then
+                return
+             end
+          end
+       end,
+       {description = 'view previous non-empty tag', group = 'tag'}
 	),
 	awful.key({ modkey, 'Control' },
-		's',
-		function ()
-			-- tag_view_nonempty(1)
-			local focused =  awful.screen.focused()
-			for i = 1, #focused.tags do
-				awful.tag.viewidx(1, focused)
-				if #focused.clients > 0 then
-					return
-				end
-			end
-		end,
-		{description = 'view next non-empty tag', group = 'tag'}
+       's',
+       function ()
+          -- tag_view_nonempty(1)
+          local focused =  awful.screen.focused()
+          for i = 1, #focused.tags do
+             awful.tag.viewidx(1, focused)
+             if #focused.clients > 0 then
+                return
+             end
+          end
+       end,
+       {description = 'view next non-empty tag', group = 'tag'}
 	),
 	awful.key(
-		{modkey, 'Shift'},
-		'F1',
-		function()
-			awful.screen.focus_relative(-1)
-		end,
-		{ description = 'focus the previous screen', group = 'screen'}
+       {modkey, 'Shift'},
+       'F1',
+       function()
+          awful.screen.focus_relative(-1)
+       end,
+       { description = 'focus the previous screen', group = 'screen'}
 	),
 	awful.key(
-		{modkey, 'Shift'},
-		'F2',
-		function()
-           awful.spawn(apps.default.musicplayer)
-		end,
-		{ description = 'open default music player', group = 'hotkeys'}
+       {modkey, 'Shift'},
+       'F2',
+       function()
+          awful.spawn(apps.default.musicplayer)
+       end,
+       { description = 'open default music player', group = 'hotkeys'}
 	),
 	awful.key(
-		{modkey, 'Control'},
-		'n',
-		function()
-			local c = awful.client.restore()
-			-- Focus restored client
-			if c then
-				c:emit_signal('request::activate')
-				c:raise()
-			end
-		end,
-		{description = 'restore minimized', group = 'screen'}
+       {modkey, 'Control'},
+       'n',
+       function()
+          local c = awful.client.restore()
+          -- Focus restored client
+          if c then
+             c:emit_signal('request::activate')
+             c:raise()
+          end
+       end,
+       {description = 'restore minimized', group = 'screen'}
 	),
 	awful.key(
-		{},
-		'XF86MonBrightnessUp',
-		function()
-			awful.spawn('light -A 10', false)
-			awesome.emit_signal('widget::brightness')
-			awesome.emit_signal('module::brightness_osd:show', true)
-		end,
-		{description = 'increase brightness by 10%', group = 'hotkeys'}
+       {},
+       'XF86MonBrightnessUp',
+       function()
+          awful.spawn('light -A 10', false)
+          awesome.emit_signal('widget::brightness')
+          awesome.emit_signal('module::brightness_osd:show', true)
+       end,
+       {description = 'increase brightness by 10%', group = 'hotkeys'}
 	),
 	awful.key(
-		{},
-		'XF86MonBrightnessDown',
-		function()
-			awful.spawn('light -U 10', false)
-			awesome.emit_signal('widget::brightness')
-			awesome.emit_signal('module::brightness_osd:show', true)
-		end,
-		{description = 'decrease brightness by 10%', group = 'hotkeys'}
+       {},
+       'XF86MonBrightnessDown',
+       function()
+          awful.spawn('light -U 10', false)
+          awesome.emit_signal('widget::brightness')
+          awesome.emit_signal('module::brightness_osd:show', true)
+       end,
+       {description = 'decrease brightness by 10%', group = 'hotkeys'}
 	),
-	-- ALSA volume control
+	-- Pulse volume control
 	awful.key(
-		{},
-		'XF86AudioRaiseVolume',
-		function()
-			awful.spawn('amixer -D pulse sset Master 5%+', false)
-			awesome.emit_signal('widget::volume')
-			awesome.emit_signal('module::volume_osd:show', true)
-		end,
-		{description = 'increase volume up by 5%', group = 'hotkeys'}
-	),
-	awful.key(
-		{},
-		'XF86AudioLowerVolume',
-		function()
-			awful.spawn('amixer -D pulse sset Master 5%-', false)
-			awesome.emit_signal('widget::volume')
-			awesome.emit_signal('module::volume_osd:show', true)
-		end,
-		{description = 'decrease volume up by 5%', group = 'hotkeys'}
+       {},
+       'XF86AudioRaiseVolume',
+       function()
+          awful.spawn('pamixer -i 5', false)
+          awesome.emit_signal('widget::volume')
+          awesome.emit_signal('module::volume_osd:show', true)
+       end,
+       {description = 'increase volume up by 5%', group = 'hotkeys'}
 	),
 	awful.key(
-		{},
-		'XF86AudioMute',
-		function()
-			awful.spawn('amixer -D pulse set Master 1+ toggle', false)
+       {},
+       'XF86AudioLowerVolume',
+       function()
+          awful.spawn('pamixer -d 5', false)
+          awesome.emit_signal('widget::volume')
+          awesome.emit_signal('module::volume_osd:show', true)
+       end,
+       {description = 'decrease volume up by 5%', group = 'hotkeys'}
+	),
+	awful.key(
+       {},
+       'XF86AudioMute',
+       function()
+          awful.spawn('pamixer -t', false)
+          awesome.emit_signal('widget::volume')
+          awesome.emit_signal('module::volume_osd:show', true)
 		end,
 		{description = 'toggle mute', group = 'hotkeys'}
 	),
